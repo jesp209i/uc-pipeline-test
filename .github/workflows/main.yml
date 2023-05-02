@@ -38,17 +38,17 @@ jobs:
         shell: bash
       
       - name: show Deployment Id  
-        run: echo ${{ needs.build.outputs.DEPLOYMENTID }}
+        run: echo ${{ needs.build.outputs.DEPLOYMENT_ID }}
         
       - name: Zip Source Code
         run: git archive --format=zip HEAD -o packed/sources.zip
         shell: bash
         
       - name: Post Zipped Artifact
-        run: scripts/upload_package.sh $PROJECT_ALIAS $deploymentId $CLOUD_KEY packed/sources.zip
+        run: scripts/upload_package.sh $PROJECT_ALIAS ${{ needs.build.outputs.DEPLOYMENT_ID }} $CLOUD_KEY packed/sources.zip
         shell: bash
         
       - name: Wait for deployment completed
-        run: scripts/get_deployment_status.sh $PROJECT_ALIAS $deploymentId $CLOUD_KEY
+        run: scripts/get_deployment_status.sh $PROJECT_ALIAS ${{ needs.build.outputs.DEPLOYMENT_ID }} $CLOUD_KEY
         shell: bash
       
