@@ -1,16 +1,22 @@
+name: pipeline
+
 on:
   push:
-    branches:
-      - master
+    branches: [ master ]
       
 jobs:
-  my_job:
-    name: Checkout
+  build:
     runs-on: ubuntu-latest
-    
-steps:
-- uses: actions/checkout@v3
-- uses: actions/setup-dotnet@v3
-  with:
-    dotnet-version: '7.0.x'
-- run: dotnet build <my project>
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .Net Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.0.x'
+      - name: Install Dependencies
+        run: dotnet restore UmbracoProject.sln
+      - name: Build
+        run: dotnet build UmbracoProject.sln --configuration Release --no-restore
+      - name: Test
+        run: dotnet test UmbracoProject.sln --no-restore --verbosity normal
