@@ -41,7 +41,7 @@ jobs:
         run: echo ${{ needs.build.outputs.DEPLOYMENT_ID }}
         
       - name: Zip Source Code
-        run: git archive --format=zip HEAD -o packed/sources.zip
+        run: zip -r packed/sources.zip . -x ".git/*" ".github/*" "src/UmbracoProject/bin/*" "src/UmbracoProject/obj/*"
         shell: bash
         
       - name: Post Zipped Artifact
