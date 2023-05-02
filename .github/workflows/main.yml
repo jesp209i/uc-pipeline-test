@@ -25,3 +25,4 @@ jobs:
         run: dotnet test $PATH_TO_CSPROJ --no-restore --verbosity normal
       - name: Zip Source Code
         run: zip -r sources.zip
+        shell: bash
