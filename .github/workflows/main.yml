@@ -31,11 +31,11 @@ jobs:
         shell: bash
         
       - name: Zip Source Code
-        run: git archive --format=zip HEAD -o /packed/sources.zip
+        run: git archive --format=zip HEAD -o packed/sources.zip
         shell: bash
         
       - name: Post Zipped Artifact
-        run: scripts/upload_package.sh $PROJECT_ALIAS $deploymentId $CLOUD_KEY /packed/sources.zip
+        run: scripts/upload_package.sh $PROJECT_ALIAS $deploymentId $CLOUD_KEY packed/sources.zip
         shell: bash
         
       - name: Wait for deployment completed
