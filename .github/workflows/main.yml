@@ -12,9 +12,6 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
-    outputs:
-      DEPLOYMENT_ID: ${{ steps.deploymentMeta.outputs.deploymentId }}
 
     steps:
       - uses: actions/checkout@v3
@@ -32,23 +29,23 @@ jobs:
       - name: Test
         run: dotnet test $PATH_TO_CSPROJ --no-restore --verbosity normal
         
-      - id: deploymentMeta
-        name: Create Deployment Meta
+      - name: Create Deployment Meta
+        id: deploymentMeta
         run: scripts/create_deployment.sh $PROJECT_ALIAS $CLOUD_KEY BuildNumber1234
         shell: bash
       
       - name: show Deployment Id  
-        run: echo ${{ needs.build.outputs.DEPLOYMENT_ID }}
+        run: echo ${{ steps.deploymentMeta.outputs.DEPLOYMENT_ID }}
         
       - name: Zip Source Code
         run: zip -r packed/sources.zip . -x ".git/*" ".github/*" "src/UmbracoProject/bin/*" "src/UmbracoProject/obj/*"
         shell: bash
         
       - name: Post Zipped Artifact
-        run: scripts/upload_package.sh $PROJECT_ALIAS ${{ needs.build.outputs.DEPLOYMENT_ID }} $CLOUD_KEY packed/sources.zip
+        run: scripts/upload_package.sh $PROJECT_ALIAS ${{ steps.deploymentMeta.outputs.DEPLOYMENT_ID }} $CLOUD_KEY packed/sources.zip
         shell: bash
         
       - name: Wait for deployment completed
-        run: scripts/get_deployment_status.sh $PROJECT_ALIAS ${{ needs.build.outputs.DEPLOYMENT_ID }} $CLOUD_KEY
+        run: scripts/get_deployment_status.sh $PROJECT_ALIAS ${{ steps.deploymentMeta.outputs.DEPLOYMENT_ID }} $CLOUD_KEY
         shell: bash
       
