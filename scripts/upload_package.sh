@@ -6,6 +6,7 @@ token="$3"
 file="$4"
 
 function call_api {
+  echo "$url"
   response=$(curl -s -X POST $url \
     -H "Ocp-Apim-Subscription-Key: $token" \
     -H "Content-Type: multipart/form-data" \
@@ -22,3 +23,4 @@ function call_api {
 }
 
 call_api
+echo "$response"
