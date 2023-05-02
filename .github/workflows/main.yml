@@ -27,7 +27,6 @@ jobs:
         run: dotnet test $PATH_TO_CSPROJ --no-restore --verbosity normal
         
       - name: Create Deployment Meta
-        env:
         run: scripts/create_deployment.sh $PROJECT_ALIAS $CLOUD_KEY BuildNumber1234
         shell: bash
         
