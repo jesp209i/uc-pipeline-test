@@ -20,3 +20,5 @@ jobs:
         run: dotnet build src/UmbracoProject/UmbracoProject.csproj --configuration Release --no-restore
       - name: Test
         run: dotnet test src/UmbracoProject/UmbracoProject.csproj --no-restore --verbosity normal
+      - name: Zip Source Code
+        run: zip -r packed/sources_$(Build.BuildNumber).zip
