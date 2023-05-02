@@ -31,4 +31,4 @@ call_api
 
 echo "Deployment started successfully -> $deployment_id"
 
-echo "##vso[task.setvariable variable=deploymentId;]$deployment_id"
+echo "deploymentId=$deployment_id"
