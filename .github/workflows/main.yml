@@ -3,6 +3,9 @@ name: pipeline
 on:
   push:
     branches: [ master ]
+    
+env:
+  PATH_TO_CSPROJ: src/UmbracoProject/UmbracoProject.csproj
       
 jobs:
   build:
@@ -14,5 +17,11 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '7.0.x'
+      - name: Install Dependencies
+        run: dotnet restore $PATH_TO_CSPROJ
+      - name: Build
+        run: dotnet build $PATH_TO_CSPROJ --configuration Release --no-restore
+      - name: Test
+        run: dotnet test $PATH_TO_CSPROJ --no-restore --verbosity normal
       - name: Zip Source Code
-        run: zip -r packed/sources.zip
+        run: zip -r sources.zip
