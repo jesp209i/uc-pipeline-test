@@ -6,6 +6,8 @@ on:
     
 env:
   PATH_TO_CSPROJ: src/UmbracoProject/UmbracoProject.csproj
+  PROJECT_ALIAS: jams-cicd-project
+  APIKEY: {{ secrets.API_KEY }}
       
 jobs:
   build:
@@ -23,6 +25,20 @@ jobs:
         run: dotnet build $PATH_TO_CSPROJ --configuration Release --no-restore
       - name: Test
         run: dotnet test $PATH_TO_CSPROJ --no-restore --verbosity normal
-      - name: Zip Source Code
-        run: zip -r sources.zip z .
+        
+      - name: Create Deployment Meta
+        run: .github/scripts/create_deployment.sh $PROJECT_ALIAS $APIKEY BuildNumber1234
         shell: bash
+        
+      - name: Zip Source Code
+        run: git archive --format=zip HEAD -o /packed/sources.zip
+        shell: bash
+        
+      - name: Post Zipped Artifect
+        run: .github/scripts/upload_package.sh $PROJECT_ALIAS $deploymentId $APIKEY /packed/sources.zip
+        shell: bash
+        
+      - name: Wait for deployment completed
+        run: .github/scripts/get_deployment_status.sh $PROJECT_ALIAS $deploymentId $APIKEY
+        shell: bash
+      
