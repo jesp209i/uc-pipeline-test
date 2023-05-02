@@ -1,0 +1,16 @@
+{
+  "Name": "Standard Page",
+  "Alias": "StandardPage",
+  "File": "umb://template-file/StandardPage.cshtml",
+  "Master": null,
+  "Udi": "umb://template/668cf1953ff647369166b44674bda315",
+  "Dependencies": [
+    {
+      "Udi": "umb://template-file/StandardPage.cshtml",
+      "Ordering": true,
+      "Mode": 0
+    }
+  ],
+  "__type": "Umbraco.Deploy.Infrastructure,Umbraco.Deploy.Infrastructure.Artifacts.TemplateArtifact",
+  "__version": "11.1.0"
+}
