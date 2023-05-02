@@ -1,7 +1,17 @@
 {
   "Deploy": {
     "Project": {
-      "Workspaces": []
+      "Name": "jams cicd project",
+      "Alias": "jams-cicd-project",
+      "Id": "767e0bed-3b2b-4c38-9d68-0b2cfaed4b6f",
+      "Workspaces": [
+        {
+          "Id": "f2b57ac4-3ea7-44f3-9e21-346a64894ab0",
+          "Name": "Live",
+          "Type": "live",
+          "Url": "https://jams-cicd-project.euwest01.rainbowsrock.net"
+        }
+      ]
     },
     "Settings": {}
   },
