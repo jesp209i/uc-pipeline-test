@@ -31,4 +31,4 @@ call_api
 
 echo "Deployment started successfully -> $deployment_id"
 
-echo "::DEPLOYEMENT_ID = $deployment_id" >> $GITHUB_ENV
+echo "DEPLOYEMENT_ID = $deployment_id" >> $GITHUB_ENV
