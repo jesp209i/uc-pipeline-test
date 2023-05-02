@@ -35,17 +35,17 @@ jobs:
         shell: bash
       
       - name: show Deployment Id  
-        run: echo "$DEPLOYMENT_ID"
+        run: echo "${{ env.DEPLOYMENT_ID}}"
         
       - name: Zip Source Code
         run: zip -r sources.zip . -x ".git/*" ".github/*" "src/UmbracoProject/bin/*" "src/UmbracoProject/obj/*"
         shell: bash
         
       - name: Post Zipped Artifact
-        run: scripts/upload_package.sh $PROJECT_ALIAS $DEPLOYMENT_ID $CLOUD_KEY $GITHUB_WORKSPACE/sources.zip
+        run: scripts/upload_package.sh $PROJECT_ALIAS ${{ env.DEPLOYMENT_ID}} $CLOUD_KEY $GITHUB_WORKSPACE/sources.zip
         shell: bash
         
       - name: Wait for deployment completed
-        run: scripts/get_deployment_status.sh $PROJECT_ALIAS $DEPLOYMENT_ID $CLOUD_KEY
+        run: scripts/get_deployment_status.sh $PROJECT_ALIAS ${{ env.DEPLOYMENT_ID}} $CLOUD_KEY
         shell: bash
       
