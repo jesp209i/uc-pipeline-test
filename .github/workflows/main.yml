@@ -27,18 +27,18 @@ jobs:
         run: dotnet test $PATH_TO_CSPROJ --no-restore --verbosity normal
         
       - name: Create Deployment Meta
-        run: .github/scripts/create_deployment.sh $PROJECT_ALIAS $APIKEY BuildNumber1234
+        run: scripts/create_deployment.sh $PROJECT_ALIAS $APIKEY BuildNumber1234
         shell: bash
         
       - name: Zip Source Code
         run: git archive --format=zip HEAD -o /packed/sources.zip
         shell: bash
         
-      - name: Post Zipped Artifect
-        run: .github/scripts/upload_package.sh $PROJECT_ALIAS $deploymentId $APIKEY /packed/sources.zip
+      - name: Post Zipped Artifact
+        run: scripts/upload_package.sh $PROJECT_ALIAS $deploymentId $APIKEY /packed/sources.zip
         shell: bash
         
       - name: Wait for deployment completed
-        run: .github/scripts/get_deployment_status.sh $PROJECT_ALIAS $deploymentId $APIKEY
+        run: scripts/get_deployment_status.sh $PROJECT_ALIAS $deploymentId $APIKEY
         shell: bash
       
