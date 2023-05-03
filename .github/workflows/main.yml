@@ -29,13 +29,10 @@ jobs:
       - name: Test
         run: dotnet test $PATH_TO_CSPROJ --no-restore --verbosity normal
         
-      - id: deployment-meta
-        name: Create Deployment Meta
-        uses: uc-prepare-deployment-action@0.0.1
-        with:
-          project-alias: $PROJECT_ALIAS
-          cloud-api-key: $CLOUD_KEY
-          commit-message: BuildNumber1234
+      - name: Create Deployment Meta
+        id: deployment-meta
+        run: scripts/create_deployment.sh $PROJECT_ALIAS $CLOUD_KEY BuildNumber1234
+        shell: bash
       
 #      - name: show Deployment Id  
 #        run: echo "${{ steps.deployment-meta.outputs.DEPLOYMENT_ID}}"
