@@ -43,6 +43,16 @@ jobs:
 #      - name: show Deployment Id  
 #        run: echo "${{ steps.deployment-meta.outputs.DEPLOYMENT_ID}}"
         
+      - name: build frontend
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14.x
+        workspace
+      - run: npm i
+          working-directory: $GITHUB_WORKSPACE/src/frontend
+      - run: npm run build
+          working-directory: $GITHUB_WORKSPACE/src/frontend
+
       - name: Zip Source Code
         run: zip -r sources.zip . -x ".git/*" ".github/*" "scripts/*" "src/UmbracoProject/bin/*" "src/UmbracoProject/obj/*"
         shell: bash
