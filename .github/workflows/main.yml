@@ -29,6 +29,8 @@ jobs:
       - name: Test
         run: dotnet test $PATH_TO_CSPROJ --no-restore --verbosity normal
         
+  Publish:
+    steps:
       - name: Create Deployment Meta
         id: deployment-meta
         run: scripts/create_deployment.sh $PROJECT_ALIAS $CLOUD_KEY BuildNumber1234
@@ -44,8 +46,10 @@ jobs:
       - name: Post Zipped Artifact
         run: scripts/upload_package.sh $PROJECT_ALIAS ${{ steps.deployment-meta.outputs.DEPLOYMENT_ID }} $CLOUD_KEY $GITHUB_WORKSPACE/sources.zip
         shell: bash
-        
+
+  Verify:
+    steps:      
       - name: Wait for deployment completed
-        run: scripts/get_deployment_status.sh $PROJECT_ALIAS ${{ steps.deployment-meta.outputs.DEPLOYMENT_ID }} $CLOUD_KEY
+        run: scripts/get_deployment_status.sh $PROJECT_ALIAS ${{ build.steps.deployment-meta.outputs.DEPLOYMENT_ID }} $CLOUD_KEY
         shell: bash
       
