@@ -31,6 +31,7 @@ jobs:
         
   publish:
     name: Zip and Publish to Cloud
+    runs-on: ubuntu-latest
     steps:
       - name: Create Deployment Meta
         id: deployment-meta
@@ -50,6 +51,7 @@ jobs:
 
   verify:
     name: Await confirmation
+    runs-on: ubuntu-latest
     steps:      
       - name: Wait for deployment completed
         run: scripts/get_deployment_status.sh $PROJECT_ALIAS ${{ needs.publish.deployment-meta.outputs.DEPLOYMENT_ID }} $CLOUD_KEY
