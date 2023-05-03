@@ -2,11 +2,16 @@
   "Name": "Standard Page",
   "Alias": "StandardPage",
   "File": "umb://template-file/StandardPage.cshtml",
-  "Master": null,
+  "Master": "umb://template/e2792528216d43d8a043fd9cca1f4c42",
   "Udi": "umb://template/668cf1953ff647369166b44674bda315",
   "Dependencies": [
     {
       "Udi": "umb://template-file/StandardPage.cshtml",
+      "Ordering": true,
+      "Mode": 0
+    },
+    {
+      "Udi": "umb://template/e2792528216d43d8a043fd9cca1f4c42",
       "Ordering": true,
       "Mode": 0
     }
