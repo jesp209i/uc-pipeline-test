@@ -6,13 +6,15 @@
 <!-- ... Meta tags etc. -->
 
 <environment include="Development">
+<!--  in dev  -->
   <script type="module" defer src="~/@@vite/client"></script> <!-- load Vite -->
   <script type="module" defer src="~/main.js"></script> <!-- define the entry point -->
 </environment>
 
 <environment exclude="Development">
-   <link rel="stylesheet" asp-href-include="~/app/assets/main.*.css"> <!-- load styles -->
-   <script type="module" defer asp-src-include="~/app/assets/main.*.js"></script> <!-- load Vite build output -->
+  <!--  ex dev  -->
+   <link rel="stylesheet" asp-href-include="~/app/assets/main*.css"> <!-- load styles -->
+   <script type="module" defer asp-src-include="~/app/assets/main*.js"></script> <!-- load Vite build output -->
 </environment>
 
 </head>
