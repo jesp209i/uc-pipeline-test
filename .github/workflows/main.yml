@@ -52,7 +52,7 @@ jobs:
       - run: npm run build
 
       - name: Zip Source Code
-        run: zip -r sources.zip . -x ".git/*" ".github/*" "scripts/*" "src/UmbracoProject/bin/*" "src/UmbracoProject/obj/*"
+        run: zip -r sources.zip . -x ".git/*" ".github/*" "scripts/*" "src/UmbracoProject/bin/*" "src/UmbracoProject/obj/*" "node_modules/*"
         shell: bash
         
       - name: Post Zipped Artifact
