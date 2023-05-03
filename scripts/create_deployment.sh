@@ -12,17 +12,23 @@ function call_api {
     -H "Ocp-Apim-Subscription-Key: $token" \
     -H "Content-Type: application/json" \
     -d "{\"commitMessage\":\"$commitMessage\"}")
-
+  echo "$response"
+#  http_code=$(echo "$response" | awk '/HTTP/{print $2}')
+#  if [[ $http_code != "201" ]]; then
+#    echo "Unexpected HTTP response code: $http_code"
+#    exit 1
+#  fi
   status=$(echo "$response" | jq -r '.deploymentState')
   deployment_id=$(echo "$response" | jq -r '.deploymentId')
   if [[ $status != "Pending" ]]; then
     echo "Unexpected status: $status"
     exit 1
   fi
-
-  echo "Deployment started successfully -> $deployment_id"
+  echo "$deployment_id"
 }
 
 call_api
 
-echo "DEPLOYMENT_ID=$deployment_id" >> $GITHUB_OUTPUT
+echo "Deployment started successfully -> $deployment_id"
+
+echo "DEPLOYMENT_ID=$deployment_id" >> "$GITHUB_OUTPUT"
