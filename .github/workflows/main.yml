@@ -20,18 +20,18 @@ jobs:
         with:
           dotnet-version: '7.0.x'
           
-#      - name: Install Dependencies
-#        run: dotnet restore $PATH_TO_CSPROJ
+      - name: Install Dependencies
+        run: dotnet restore $PATH_TO_CSPROJ
         
-#      - name: Build
-#        run: dotnet build $PATH_TO_CSPROJ --configuration Release --no-restore
+      - name: Build
+        run: dotnet build $PATH_TO_CSPROJ --configuration Release --no-restore
         
-#      - name: Test
-#        run: dotnet test $PATH_TO_CSPROJ --no-restore --verbosity normal
+      - name: Test
+        run: dotnet test $PATH_TO_CSPROJ --no-restore --verbosity normal
         
       - id: deployment-meta
         name: Create Deployment Meta
-        uses: jesp209i/uc-prepare-deployment-action@v0.0.3-beta3
+        uses: jesp209i/uc-prepare-deployment-action@v0.0.3-beta2
         with:
           project-alias: $PROJECT_ALIAS
           cloud-api-key: $CLOUD_KEY
