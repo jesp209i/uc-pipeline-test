@@ -7,7 +7,7 @@ export default defineConfig({
     emptyOutDir: true, // needs to be explicitly set because it’s outside of ./
     rollupOptions: {
       input: {
-        main: resolve(__dirname, 'src/frontend/src/main.ts')
+        main: resolve( 'src/frontend/src/main.ts')
       }
     }
   }

@@ -3,15 +3,17 @@ import typescriptLogo from './typescript.svg'
 import viteLogo from '../public/vite.svg'
 import { setupCounter } from './counter.ts'
 
+let headline = document.querySelector<HTMLDivElement>('#app')!.innerText;
+
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>
     <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
+      <img src="/app${viteLogo}" class="logo" alt="Vite logo" />
     </a>
     <a href="https://www.typescriptlang.org/" target="_blank">
       <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
     </a>
-    <h1>Vite + TypeScript</h1>
+    <h1>${headline}</h1>
     <div class="card">
       <button id="counter" type="button"></button>
     </div>
