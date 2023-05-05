@@ -2,7 +2,8 @@ import './style.css'
 import typescriptLogo from './typescript.svg'
 import viteLogo from '../public/vite.svg'
 import { setupCounter } from './counter.ts'
-import '@umbraco-ui/uui'
+import '@umbraco-ui/uui-box'
+import '@umbraco-ui/uui-button'
 
 let headline = document.querySelector<HTMLDivElement>('#app')!.innerText;
 
