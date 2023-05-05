@@ -2,25 +2,26 @@ import './style.css'
 import typescriptLogo from './typescript.svg'
 import viteLogo from '../public/vite.svg'
 import { setupCounter } from './counter.ts'
+import '@umbraco-ui/uui-box'
+import '@umbraco-ui/uui-button'
 
 let headline = document.querySelector<HTMLDivElement>('#app')!.innerText;
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
+  <uui-box headline="${headline}">
     <a href="https://vitejs.dev" target="_blank">
       <img src="/app${viteLogo}" class="logo" alt="Vite logo" />
     </a>
     <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
+      <img src="/app${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
     </a>
-    <h1>${headline}</h1>
     <div class="card">
-      <button id="counter" type="button"></button>
+      <uui-button look="primary" id="counter" type="button"></uui-button>
     </div>
     <p class="read-the-docs">
       Click on the Vite and TypeScript logos to learn more
     </p>
-  </div>
+  </uui-box>
 `
 
 setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
