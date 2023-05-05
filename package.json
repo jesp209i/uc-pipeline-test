@@ -13,5 +13,8 @@
     "vite": "^4.3.2",
     "path": "^0.12.7"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@umbraco-ui/uui-box": "^1.2.1",
+    "@umbraco-ui/uui-button": "^1.2.1"
+  }
 }
