@@ -35,10 +35,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Create Deployment Meta
-        id: deployment-meta
-        run: scripts/create_deployment.sh $PROJECT_ALIAS $CLOUD_KEY BuildNumber1234
-        shell: bash
       
 #      - name: show Deployment Id  
 #        run: echo "${{ steps.deployment-meta.outputs.DEPLOYMENT_ID}}"
@@ -47,9 +43,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 14.x
-          cache-dependency-path: src/frontend/package-lock.json
-      - run: npm i
-      - run: npm run build
+      - run: npm i && npm run build
+
+      - name: Create Deployment Meta
+        id: deployment-meta
+        run: scripts/create_deployment.sh $PROJECT_ALIAS $CLOUD_KEY BuildNumber1234
+        shell: bash
 
       - name: Zip Source Code
         run: zip -r sources.zip . -x ".git/*" ".github/*" "scripts/*" "src/UmbracoProject/bin/*" "src/UmbracoProject/obj/*" "node_modules/*"
