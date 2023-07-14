@@ -38,7 +38,7 @@ jobs:
 
       - name: Check for remote changes since last 
         id: deploymentCheckRemoteChanges
-        run: scripts/get_changes_since_last_deployment.sh $PROJECT_ALIAS $CLOUD_KEY 
+        run: scripts/get_changes_since_last_deployment.sh $PROJECT_ALIAS $CLOUD_KEY $GITHUB_WORKSPACE/git_patch
         shell: bash
         
       - name: build frontend

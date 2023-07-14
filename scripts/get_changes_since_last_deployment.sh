@@ -38,12 +38,12 @@ get_changes
 if [[ 10#$responseCode -eq 204 ]]; then # Http 204 No Content means that there are no changes
   echo "No changes"
   rm -fr $downloadFolder/git-patch.diff
-  echo "##vso[task.setvariable variable=remoteChanges;isOutput=true]no"
+  echo "REMOTE_CHANGES=no" >> "$GITHUB_OUTPUT"
 elif [[ 10#$responseCode -eq 200 ]]; then # Http 200 downloads the file and set a few variables for pipeline
   echo "Changes - check file - $downloadFolder/git-patch.diff"
-  echo "##vso[task.setvariable variable=remoteChanges;isOutput=true]yes"
-  echo "##vso[task.setvariable variable=lastestDeploymentId;isOutput=true]$latestDeploymentId"
-  echo "##vso[task.setvariable variable=remoteChangeFile;isOutput=true]git-patch.diff"
+  echo "REMOTE_CHANGES=yes" >> "$GITHUB_OUTPUT"
+  echo "LATEST_DEPLOYMENTID=$latestDeploymentId" >> "$GITHUB_OUTPUT"
+  echo "REMOTE_CHANGE_FILE=git-patch.diff" >> "$GITHUB_OUTPUT"
 else
   echo "Unexpected status: $responseCode"
   exit 1
