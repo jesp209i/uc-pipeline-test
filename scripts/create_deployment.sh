@@ -1,15 +1,16 @@
 #!/bin/bash
 
 # Set variables
-url="https://apim-dev-global.azure-api.net/global/project/cicd-prototype/api/public/projects/$1/deployments"
-token="$2"
+projectAlias="$1"
+url="https://apim-dev-global.azure-api.net/projects/$projectAlias/deployments"
+apiKey="$2"
 commitMessage="$3"
 
 # Define function to call API and check status
 function call_api {
   echo "$url"
   response=$(curl -s -X POST $url \
-    -H "Ocp-Apim-Subscription-Key: $token" \
+    -H "Umbraco-Api-Key: $apiKey" \
     -H "Content-Type: application/json" \
     -d "{\"commitMessage\":\"$commitMessage\"}")
   echo "$response"
