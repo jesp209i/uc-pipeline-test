@@ -1,8 +1,8 @@
-name: pipeline
+name: old pipeline
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
     
 env:
   PATH_TO_CSPROJ: src/UmbracoProject/UmbracoProject.csproj

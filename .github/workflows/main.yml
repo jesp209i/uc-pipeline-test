@@ -1,9 +1,9 @@
-name: pipeline
+name: pwsh pipeline
 
 on:
   push:
     branches:
-     - main
+     - master
      - powershell # current branch
 
 env:
