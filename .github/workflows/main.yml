@@ -8,7 +8,7 @@ on:
 
 env:
   projectId: ${{ vars.PROJECT_ID }} # Set as variable
-  umbracoCloudApiKey: ${{ secrets.API_KEY }} # set as secret
+  CLOUD_KEY: ${{ secrets.API_KEY }} # set as secret
   baseUrl : https://api.dev-cloud.umbraco.com
 
 jobs:
@@ -60,7 +60,7 @@ jobs:
           ${{GITHUB.WORKSPACE}}/.github/powershell/new-deployment.ps1 
           -BaseUrl ${{env.baseUrl}} 
           -ProjectId ${{ env.projectId }} 
-          -ApiKey ${{ env.umbracoCloudApiKey }} 
+          -ApiKey ${{ env.CLOUD_KEY }} 
           -CommitMessage "Run number ${{github.run_number}}" 
           -PipelineVendor GITHUB
 
@@ -83,7 +83,7 @@ jobs:
           -BaseUrl ${{env.baseUrl}} 
           -ProjectId ${{ env.projectId }} 
           -DeploymentId ${{ steps.deployment-meta.outputs.DEPLOYMENT_ID }} 
-          -ApiKey ${{ env.umbracoCloudApiKey }}
+          -ApiKey ${{ env.CLOUD_KEY }}
           -FilePath ${{ GITHUB.WORKSPACE }}/sources.zip
 
       # Actually request to start the deployment process in cloud
@@ -94,7 +94,7 @@ jobs:
           -BaseUrl ${{env.baseUrl}} 
           -ProjectId ${{ env.projectId }} 
           -DeploymentId ${{ steps.deployment-meta.outputs.DEPLOYMENT_ID }} 
-          -ApiKey ${{ env.umbracoCloudApiKey }}
+          -ApiKey ${{ env.CLOUD_KEY }}
 
       # Poll until deployment finishes 
       - name: Wait for deployment completed PWSH
@@ -104,5 +104,5 @@ jobs:
           -BaseUrl ${{ env.baseUrl }} 
           -ProjectId ${{ env.projectId }} 
           -DeploymentId ${{ steps.deployment-meta.outputs.DEPLOYMENT_ID }} 
-          -ApiKey ${{ env.umbracoCloudApiKey }}
+          -ApiKey ${{ env.CLOUD_KEY }}
         #  -TimeoutSeconds 1200
