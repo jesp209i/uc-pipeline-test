@@ -7,7 +7,7 @@ on:
 env:
   PATH_TO_CSPROJ: src/UmbracoProject/UmbracoProject.csproj
   PROJECT_ALIAS: jams-cicd-project
-  CLOUD_KEY: ${{ secrets.API_KEY }}
+  CLOUD_KEY: ${{ secrets.OLD_API_KEY }}
       
 jobs:
   build:
