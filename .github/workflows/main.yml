@@ -8,7 +8,7 @@ on:
 
 env:
   projectId: ${{ vars.PROJECT_ID }} # Set as variable
-  umbracoCloudApiKey: ${{ secrets.UMBRACO_CLOUD_API_KEY }} # set as secret
+  umbracoCloudApiKey: ${{ secrets.API_KEY }} # set as secret
   baseUrl : https://api.cloud.umbraco.com
 
 jobs:
