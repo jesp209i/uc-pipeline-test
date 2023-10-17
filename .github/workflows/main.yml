@@ -9,12 +9,12 @@ on:
 env:
   projectId: ${{ vars.PROJECT_ID }} # Set as variable
   umbracoCloudApiKey: ${{ secrets.API_KEY }} # set as secret
-  baseUrl : https://api.cloud.umbraco.com
+  baseUrl : https://api.dev-cloud.umbraco.com
 
 jobs:
 
   # preflight:
-  #   name: Check for changes in cloud
+  #   name: Check for changes in cloud  
   #   runs-on: ubuntu-latest
   #   steps:
   #     - uses: actions/checkout@v3
