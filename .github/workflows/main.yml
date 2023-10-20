@@ -26,7 +26,7 @@ jobs:
           ${{GITHUB.WORKSPACE}}/.github/powershell/get-latest-deployment-diff.ps1
           -BaseUrl ${{env.baseUrl}}
           -ProjectId ${{ env.projectId }} 
-          -ApiKey ${{ env.umbracoCloudApiKey }} 
+          -ApiKey ${{ env.CLOUD_KEY }} 
             -DownloadPath $GITHUB_WORKSPACE/git_patch
             -PipelineVendor GITHUB
 
@@ -39,8 +39,7 @@ jobs:
           git switch -c auto/merge_remote_changes_for_${{github.run_number}}
           git apply -v $(Pipeline.Workspace)/PatchFile/$(gitPatchFile)
           git commit -m "Auto updated changes from remote for build ${{github.run_number}}" .
-          git remote add tmp-pusher https://$(git-pat)@dev.azure.com/umbraco/Cloud%20Team/_git/CICD%20Demo%20Site
-          git push --set-upstream tmp-pusher auto/merge_remote_changes_for_${{github.run_number}}
+          git push --set-upstream origin auto/merge_remote_changes_for_${{github.run_number}}
 
 
   # publish:
