@@ -55,7 +55,7 @@ jobs:
         run: |          
           git config user.name "Build pipeline"
           git config user.email jam@umbraco.com
-          git config push.autoSetupRemote = true
+          git config push.autoSetupRemote true
           git switch -c auto/merge_remote_changes_for_${{github.run_number}}
           git apply -v ${{GITHUB.WORKSPACE}}/git_patch/${{ steps.latest-deployment.outputs.REMOTE_CHANGE_FILE }}
           Remove-Item ${{GITHUB.WORKSPACE}}/git_patch/${{ steps.latest-deployment.outputs.REMOTE_CHANGE_FILE }}
