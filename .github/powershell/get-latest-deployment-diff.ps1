@@ -92,7 +92,7 @@ try {
     Write-Host "No Changes"
     switch ($PipelineVendor) {
       "GITHUB" {
-        "REMOTE_CHANGES=false" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+        "REMOTE_CHANGES=no" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
       }
       "AZUREDEVOPS" {
         Write-Host "##vso[task.setvariable variable=remoteChanges;isOutput=true]no"      }
@@ -112,7 +112,7 @@ try {
     Write-Host "Changes registered - check file: $DownloadFolder/git-patch.diff"
     switch ($PipelineVendor) {
       "GITHUB" {
-        "REMOTE_CHANGES=true" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+        "REMOTE_CHANGES=yes" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
         "REMOTE_CHANGE_FILE=git-patch.diff" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
       }
       "AZUREDEVOPS" {

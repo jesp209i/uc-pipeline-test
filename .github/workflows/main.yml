@@ -44,7 +44,7 @@ jobs:
           -PipelineVendor GITHUB
 
       - name: Apply changes
-        if: ${{ steps.latest-deployment.outputs.REMOTE_CHANGES == 'truw' }}
+        if: ${{ steps.latest-deployment.outputs.REMOTE_CHANGES == 'yes' }}
         shell: pwsh
         run: |          
           git config user.name "Build pipeline"
