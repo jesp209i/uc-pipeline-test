@@ -18,7 +18,7 @@ env:
   projectId: ${{ vars.PROJECT_ID }} # Set as variable
   CLOUD_KEY: ${{ secrets.API_KEY }} # set as secret
   baseUrl : https://api.dev-cloud.umbraco.com
-  github_pat_token: ${{ secrets.GITHUB_TOKEN }}
+  github_pat_token: ${{ secrets.GITPAT_TOKEN }}
 
 jobs:
   preflight:
@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with: ${{ secrets.GITHUB_TOKEN }}
+        with: ${{ env.github_pat_token }}
 
       - run: |
           mkdir -p ${{GITHUB.WORKSPACE}}/git_patch
