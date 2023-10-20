@@ -53,6 +53,7 @@ jobs:
           git switch -c auto/merge_remote_changes_for_${{github.run_number}}
           git apply -v ${{GITHUB.WORKSPACE}}/git_patch/${{ steps.latest-deployment.outputs.REMOTE_CHANGE_FILE }}
           Remove-Item ${{GITHUB.WORKSPACE}}/git_patch/${{ steps.latest-deployment.outputs.REMOTE_CHANGE_FILE }}
+          git add .
           git commit -m "Auto updated changes from remote for build ${{github.run_number}}" .
           git remote set-url tmp-pusher https://jesp209i:${{ env.github_pat_token }}@github.com/${{ github.repository }}
 
