@@ -56,6 +56,7 @@ jobs:
           git add -A
           git commit -m "Auto updated changes from remote for build ${{github.run_number}}" .
           git remote set-url tmp-pusher https://jesp209i:${{ env.github_pat_token }}@github.com/${{ github.repository }}
+          git remote -v
           git push --set-upstream tmp-pusher auto/merge_remote_changes_for_${{github.run_number}}
 
 
