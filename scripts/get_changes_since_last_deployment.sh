@@ -1,13 +1,14 @@
 #!/bin/bash
 
 # Set variables
-projectAlias="$1"
-apiKey="$2"
-downloadFolder="$3"
+baseUrl="$1"
+projectAlias="$2"
+apiKey="$3"
+downloadFolder="$4"
 
 # Get latest deployment id
 function get_latest_deployment_id {
-  deployments_url="https://apim-dev-global.azure-api.net/projects/$projectAlias/deployments?skip=0&take=1"
+  deployments_url="$baseUrl/v1/projects/$projectAlias/deployments?skip=0&take=1&cloudcommit=true"
   response=$(curl -s -X GET $deployments_url \
     -H "Umbraco-Api-Key: $apiKey" \
     -H "Content-Type: application/json")
@@ -18,7 +19,7 @@ function get_latest_deployment_id {
 # Get diff - stores file as git-patch.diff
 function get_changes {
   mkdir -p $downloadFolder # ensure folder exists
-  change_url="https://apim-dev-global.azure-api.net/projects/$projectAlias/deployments/$latestDeploymentId/diff"
+  change_url="$baseUrl/v1/projects/$projectAlias/deployments/$latestDeploymentId/diff"
   responseCode=$(curl -s -w "%{http_code}" -L -o "$downloadFolder/git-patch.diff" -X GET $change_url \
     -H "Umbraco-Api-Key: $apiKey" \
     -H "Content-Type: application/json")

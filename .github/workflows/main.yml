@@ -1,10 +1,12 @@
 name: pwsh pipeline
 
 on:
+  workflow_dispatch:
   push:
     branches:
      - master
-     - powershell # current branch
+     - powershell
+     - gitchanges
 
 env:
   projectId: ${{ vars.PROJECT_ID }} # Set as variable
@@ -12,97 +14,94 @@ env:
   baseUrl : https://api.dev-cloud.umbraco.com
 
 jobs:
+  preflight:
+    name: Check for changes in cloud  
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Get Latest deployment
+        id: latest-deployment
+        shell: pwsh
+        run: >
+          ${{GITHUB.WORKSPACE}}/.github/powershell/get-latest-deployment-diff.ps1
+          -BaseUrl ${{env.baseUrl}}
+          -ProjectId ${{ env.projectId }} 
+          -ApiKey ${{ env.umbracoCloudApiKey }} 
+            -DownloadPath $GITHUB_WORKSPACE/git_patch
+            -PipelineVendor GITHUB
 
-  # preflight:
-  #   name: Check for changes in cloud  
+      - name: Apply changes
+        if: ${{ steps.latest-deployment.outputs.REMOTE_CHANGES == 'true' }}
+        shell: pwsh
+        run: |          
+          git config user.name "Build pipeline"
+          git config user.email jam@umbraco.com
+          git switch -c auto/merge_remote_changes_for_${{github.run_number}}
+          git apply -v $(Pipeline.Workspace)/PatchFile/$(gitPatchFile)
+          git commit -m "Auto updated changes from remote for build ${{github.run_number}}" .
+          git remote add tmp-pusher https://$(git-pat)@dev.azure.com/umbraco/Cloud%20Team/_git/CICD%20Demo%20Site
+          git push --set-upstream tmp-pusher auto/merge_remote_changes_for_${{github.run_number}}
+
+
+  # publish:
+  #   name: Zip and Publish to Cloud
   #   runs-on: ubuntu-latest
   #   steps:
   #     - uses: actions/checkout@v3
 
-  #     - name: Get Latest deployment
-  #       id: latest-deployment
+  #     # Request to prepare a deployment
+  #     # - sets the commit message to be used in cloud 
+  #     # - supplies you with a deploymentId to be used in the rest of the process
+  #     - name: Create Deployment Meta
+  #       id: deployment-meta
   #       shell: pwsh
-  #       run: >
-  #         ${{GITHUB.WORKSPACE}}/.github/powershell/get-latest-deployment-diff.ps1
-  #         -BaseUrl ${{env.baseUrl}}
+  #       run: > 
+  #         ${{GITHUB.WORKSPACE}}/.github/powershell/new-deployment.ps1 
+  #         -BaseUrl ${{env.baseUrl}} 
   #         -ProjectId ${{ env.projectId }} 
-  #         -ApiKey ${{ env.umbracoCloudApiKey }} 
-  #         -DownloadPath $GITHUB_WORKSPACE/git_patch
+  #         -ApiKey ${{ env.CLOUD_KEY }} 
+  #         -CommitMessage "Run number ${{github.run_number}}" 
   #         -PipelineVendor GITHUB
 
-  #     - name: Apply changes
-  #       if: ${{ steps.latest-deployment.outputs.REMOTE_CHANGES == 'true' }}
+  #     # switch the gitignore files so cloud does not ignore my build frontend assets
+  #     # this is in order to bundle the the cloud.gitignore correctly
+  #     - name: Prepare Cloud Git Ignore
+  #       run: cp cloud.gitignore .gitignore
+  #       shell: bash
+
+  #     # zip everything, but what is defined in the '.zipignore'
+  #     - name: Zip Source Code
+  #       run: zip -r sources.zip . -x@.zipignore
+  #       shell: bash
+
+  #     # Upload your zipped artifact
+  #     - name: Post Zipped Artifact
   #       shell: pwsh
-  #       run: |          
+  #       run: >
+  #         ${{GITHUB.WORKSPACE}}/.github/powershell/add-deployment-package.ps1 
+  #         -BaseUrl ${{env.baseUrl}} 
+  #         -ProjectId ${{ env.projectId }} 
+  #         -DeploymentId ${{ steps.deployment-meta.outputs.DEPLOYMENT_ID }} 
+  #         -ApiKey ${{ env.CLOUD_KEY }}
+  #         -FilePath ${{ GITHUB.WORKSPACE }}/sources.zip
 
-  #             git config user.name "Build pipeline"
-  #             git config user.email cma@umbraco.com
-  #             git switch -c auto/merge_remote_changes_for_$(Build.BuildNumber)
-  #             git apply -v $(Pipeline.Workspace)/PatchFile/$(gitPatchFile)
-  #             git commit -m "Auto updated changes from remote for build $(Build.BuildNumber)" .
-  #             git remote add tmp-pusher https://$(git-pat)@dev.azure.com/umbraco/Cloud%20Team/_git/CICD%20Demo%20Site
-  #             git push --set-upstream tmp-pusher auto/merge_remote_changes_for_$(Build.BuildNumber)
+  #     # Actually request to start the deployment process in cloud
+  #     - name: Request Start Deployment
+  #       shell: pwsh
+  #       run: >
+  #         ${{ GITHUB.WORKSPACE }}/.github/powershell/start-deployment.ps1 
+  #         -BaseUrl ${{env.baseUrl}} 
+  #         -ProjectId ${{ env.projectId }} 
+  #         -DeploymentId ${{ steps.deployment-meta.outputs.DEPLOYMENT_ID }} 
+  #         -ApiKey ${{ env.CLOUD_KEY }}
 
-
-  publish:
-    name: Zip and Publish to Cloud
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      # Request to prepare a deployment
-      # - sets the commit message to be used in cloud 
-      # - supplies you with a deploymentId to be used in the rest of the process
-      - name: Create Deployment Meta
-        id: deployment-meta
-        shell: pwsh
-        run: > 
-          ${{GITHUB.WORKSPACE}}/.github/powershell/new-deployment.ps1 
-          -BaseUrl ${{env.baseUrl}} 
-          -ProjectId ${{ env.projectId }} 
-          -ApiKey ${{ env.CLOUD_KEY }} 
-          -CommitMessage "Run number ${{github.run_number}}" 
-          -PipelineVendor GITHUB
-
-      # switch the gitignore files so cloud does not ignore my build frontend assets
-      # this is in order to bundle the the cloud.gitignore correctly
-      - name: Prepare Cloud Git Ignore
-        run: cp cloud.gitignore .gitignore
-        shell: bash
-
-      # zip everything, but what is defined in the '.zipignore'
-      - name: Zip Source Code
-        run: zip -r sources.zip . -x@.zipignore
-        shell: bash
-
-      # Upload your zipped artifact
-      - name: Post Zipped Artifact
-        shell: pwsh
-        run: >
-          ${{GITHUB.WORKSPACE}}/.github/powershell/add-deployment-package.ps1 
-          -BaseUrl ${{env.baseUrl}} 
-          -ProjectId ${{ env.projectId }} 
-          -DeploymentId ${{ steps.deployment-meta.outputs.DEPLOYMENT_ID }} 
-          -ApiKey ${{ env.CLOUD_KEY }}
-          -FilePath ${{ GITHUB.WORKSPACE }}/sources.zip
-
-      # Actually request to start the deployment process in cloud
-      - name: Request Start Deployment
-        shell: pwsh
-        run: >
-          ${{ GITHUB.WORKSPACE }}/.github/powershell/start-deployment.ps1 
-          -BaseUrl ${{env.baseUrl}} 
-          -ProjectId ${{ env.projectId }} 
-          -DeploymentId ${{ steps.deployment-meta.outputs.DEPLOYMENT_ID }} 
-          -ApiKey ${{ env.CLOUD_KEY }}
-
-      # Poll until deployment finishes 
-      - name: Wait for deployment completed PWSH
-        shell: pwsh
-        run: >
-          ${{ GITHUB.WORKSPACE }}/.github/powershell/test-deployment-status.ps1 
-          -BaseUrl ${{ env.baseUrl }} 
-          -ProjectId ${{ env.projectId }} 
-          -DeploymentId ${{ steps.deployment-meta.outputs.DEPLOYMENT_ID }} 
-          -ApiKey ${{ env.CLOUD_KEY }}
-        #  -TimeoutSeconds 1200
+  #     # Poll until deployment finishes 
+  #     - name: Wait for deployment completed PWSH
+  #       shell: pwsh
+  #       run: >
+  #         ${{ GITHUB.WORKSPACE }}/.github/powershell/test-deployment-status.ps1 
+  #         -BaseUrl ${{ env.baseUrl }} 
+  #         -ProjectId ${{ env.projectId }} 
+  #         -DeploymentId ${{ steps.deployment-meta.outputs.DEPLOYMENT_ID }} 
+  #         -ApiKey ${{ env.CLOUD_KEY }}
+  #       #  -TimeoutSeconds 1200
