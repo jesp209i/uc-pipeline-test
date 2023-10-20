@@ -62,7 +62,8 @@ jobs:
           git commit -m "Auto updated changes from remote for build ${{github.run_number}}" .
           git remote add pipeline https://x-access-token:${{ secrets.GITPAT_TOKEN  }}@github.com/${{ github.repository }}
           git remote -v
-          git push --set-upstream pipeline auto/merge_remote_changes_for_${{github.run_number}}
+          git push 
+# --set-upstream pipeline auto/merge_remote_changes_for_${{github.run_number}}
 
 
   # publish:
