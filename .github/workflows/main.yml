@@ -27,8 +27,8 @@ jobs:
           -BaseUrl ${{env.baseUrl}}
           -ProjectId ${{ env.projectId }} 
           -ApiKey ${{ env.CLOUD_KEY }} 
-            -DownloadPath $GITHUB_WORKSPACE/git_patch
-            -PipelineVendor GITHUB
+          -DownloadFolder $GITHUB_WORKSPACE/git_patch
+          -PipelineVendor GITHUB
 
       - name: Apply changes
         if: ${{ steps.latest-deployment.outputs.REMOTE_CHANGES == 'true' }}
