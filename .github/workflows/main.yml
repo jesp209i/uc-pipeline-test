@@ -2,12 +2,6 @@ name: pwsh pipeline
 
 on:
   workflow_dispatch:
-    inputs:
-      tags: 
-        description: 'Hello'
-        required: false
-        type: boolean
-
   push:
     branches:
      - master
