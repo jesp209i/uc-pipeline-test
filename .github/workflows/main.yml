@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - run: |
-          mkdir -p /git_patch
+          mkdir -p ${{GITHUB.WORKSPACE}}/git_patch
           cd git_patch
           ls
           cd ..
@@ -34,7 +34,7 @@ jobs:
           -BaseUrl ${{env.baseUrl}}
           -ProjectId ${{ env.projectId }} 
           -ApiKey ${{ env.CLOUD_KEY }} 
-          -DownloadFolder /git_patch
+          -DownloadFolder ${{GITHUB.WORKSPACE}}/git_patch
           -PipelineVendor GITHUB
 
       - name: Apply changes
