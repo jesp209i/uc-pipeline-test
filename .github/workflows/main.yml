@@ -20,8 +20,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - run: mkdir -p $GITHUB_WORKSPACE/git_patch
-      
+      - run: |
+          mkdir -p /git_patch
+          cd git_patch
+          ls
+          cd ..
+
       - name: Get Latest deployment
         id: latest-deployment
         shell: pwsh
@@ -30,7 +34,7 @@ jobs:
           -BaseUrl ${{env.baseUrl}}
           -ProjectId ${{ env.projectId }} 
           -ApiKey ${{ env.CLOUD_KEY }} 
-          -DownloadFolder $GITHUB_WORKSPACE/git_patch
+          -DownloadFolder /git_patch
           -PipelineVendor GITHUB
 
       - name: Apply changes
