@@ -26,6 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with: ${{ secrets.GITHUB_TOKEN }}
 
       - run: |
           mkdir -p ${{GITHUB.WORKSPACE}}/git_patch
@@ -55,9 +56,8 @@ jobs:
           Remove-Item ${{GITHUB.WORKSPACE}}/git_patch/${{ steps.latest-deployment.outputs.REMOTE_CHANGE_FILE }}
           git add -A
           git commit -m "Auto updated changes from remote for build ${{github.run_number}}" .
-          git remote set-url tmp-pusher https://jesp209i:${{ env.github_pat_token }}@github.com/${{ github.repository }}
-
-          git push --set-upstream tmp-pusher auto/merge_remote_changes_for_${{github.run_number}}
+          git push --set-upstream origin auto/merge_remote_changes_for_${{github.run_number}}
+#          git remote set-url tmp-pusher https://jesp209i:${{ env.github_pat_token }}@github.com/${{ github.repository }}
 
 
   # publish:
