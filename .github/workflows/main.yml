@@ -19,6 +19,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
+      - run: mkdir -p $GITHUB_WORKSPACE/git_patch
+      
       - name: Get Latest deployment
         id: latest-deployment
         shell: pwsh
@@ -31,7 +34,7 @@ jobs:
           -PipelineVendor GITHUB
 
       - name: Apply changes
-        if: ${{ steps.latest-deployment.outputs.REMOTE_CHANGES == 'true' }}
+        if: ${{ steps.latest-deployment.outputs.REMOTE_CHANGES == 'truw' }}
         shell: pwsh
         run: |          
           git config user.name "Build pipeline"
