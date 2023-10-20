@@ -18,6 +18,7 @@ env:
   projectId: ${{ vars.PROJECT_ID }} # Set as variable
   CLOUD_KEY: ${{ secrets.API_KEY }} # set as secret
   baseUrl : https://api.dev-cloud.umbraco.com
+  github_pat_token: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   preflight:
@@ -53,6 +54,8 @@ jobs:
           git apply -v ${{GITHUB.WORKSPACE}}/git_patch/${{ steps.latest-deployment.outputs.REMOTE_CHANGE_FILE }}
           Remove-Item ${{GITHUB.WORKSPACE}}/git_patch/${{ steps.latest-deployment.outputs.REMOTE_CHANGE_FILE }}
           git commit -m "Auto updated changes from remote for build ${{github.run_number}}" .
+          git remote set-url origin https://x-access-token:${{ env.github_pat_token }}@github.com/${{ github.repository }}
+
           git push --set-upstream origin auto/merge_remote_changes_for_${{github.run_number}}
 
 
