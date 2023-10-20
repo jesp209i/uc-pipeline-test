@@ -54,9 +54,9 @@ jobs:
           git apply -v ${{GITHUB.WORKSPACE}}/git_patch/${{ steps.latest-deployment.outputs.REMOTE_CHANGE_FILE }}
           Remove-Item ${{GITHUB.WORKSPACE}}/git_patch/${{ steps.latest-deployment.outputs.REMOTE_CHANGE_FILE }}
           git commit -m "Auto updated changes from remote for build ${{github.run_number}}" .
-          git remote set-url origin https://x-access-token:${{ env.github_pat_token }}@github.com/${{ github.repository }}
+          git remote set-url auto https://x-access-token:${{ env.github_pat_token }}@github.com/${{ github.repository }}
 
-          git push --set-upstream origin auto/merge_remote_changes_for_${{github.run_number}}
+          git push --set-upstream auto auto/merge_remote_changes_for_${{github.run_number}}
 
 
   # publish:
