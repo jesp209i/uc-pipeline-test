@@ -26,7 +26,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with: ${{ secrets.GITHUB_TOKEN }}
 
       - run: |
           mkdir -p ${{GITHUB.WORKSPACE}}/git_patch
