@@ -60,9 +60,9 @@ jobs:
           Remove-Item ${{GITHUB.WORKSPACE}}/git_patch/${{ steps.latest-deployment.outputs.REMOTE_CHANGE_FILE }}
           git add -A
           git commit -m "Auto updated changes from remote for build ${{github.run_number}}" .
-          git push --set-upstream origin auto/merge_remote_changes_for_${{github.run_number}}
-#          git remote add tmp-pusher https://x-access-token:${{ secrets.GITPAT_TOKEN  }}@github.com/${{ github.repository }}
-#          git remote -v
+          git remote add pipeline https://x-access-token:${{ secrets.GITPAT_TOKEN  }}@github.com/${{ github.repository }}
+          git remote -v
+          git push --set-upstream pipeline auto/merge_remote_changes_for_${{github.run_number}}
 
 
   # publish:
