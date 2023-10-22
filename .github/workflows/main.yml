@@ -25,7 +25,6 @@ env:
 
 jobs:
   preflight:
-    if: ${{ inputs.skipPreflight == false }}
     name: Check for changes in cloud  
     runs-on: ubuntu-latest
     steps:
@@ -38,8 +37,10 @@ jobs:
           cd git_patch
           ls
           cd ..
+        if: ${{ inputs.skipPreflight == false }}
 
       - name: Get Latest deployment
+        if: ${{ inputs.skipPreflight == false }}
         id: latest-deployment
         shell: pwsh
         run: >
@@ -51,7 +52,7 @@ jobs:
           -PipelineVendor GITHUB
 
       - name: Apply changes
-        if: ${{ steps.latest-deployment.outputs.REMOTE_CHANGES == 'yes' }}
+        if: ${{ inputs.skipPreflight == false && steps.latest-deployment.outputs.REMOTE_CHANGES == 'yes' }}
         shell: pwsh
         run: |          
           git config user.name "Build pipeline"
@@ -67,14 +68,14 @@ jobs:
           git push --set-upstream pipeline auto/merge_remote_changes_for_${{github.run_number}}
 
       - name: Next Steps
-        if: ${{ steps.latest-deployment.outputs.REMOTE_CHANGES == 'yes' }}
+        if: ${{ inputs.skipPreflight == false && steps.latest-deployment.outputs.REMOTE_CHANGES == 'yes' }}
         shell: pwsh
         run: |
           Write-Host "Please take a look at new changes. They have been applied to a branch for you to consider"
           Write-Host "auto/merge_remote_changes_for_${{github.run_number}}"
 
       - name: No changes
-        if: ${{ steps.latest-deployment.outputs.REMOTE_CHANGES == 'no' }}
+        if: ${{ (inputs.skipPreflight == false && steps.latest-deployment.outputs.REMOTE_CHANGES == 'no') || inputs.skipPreflight == true }}
         run: echo "preflight_changes=false" >> $GITHUB_ENV
 
   next:
