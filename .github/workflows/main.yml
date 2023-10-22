@@ -27,6 +27,8 @@ jobs:
   preflight:
     name: Check for changes in cloud  
     runs-on: ubuntu-latest
+    outputs:
+      preflight_changes: ${{ steps.latest-deployment.outputs.REMOTE_CHANGES == 'yes' }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -81,7 +83,7 @@ jobs:
   next:
     name: hello
     needs: preflight
-    if: ${{ inputs.skipPreflight == true || github.env.preflight_changes == false }}
+    if: ${{ needs.preflight.outputs.preflight_changes == false }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
