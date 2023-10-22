@@ -72,13 +72,14 @@ jobs:
         run: |
           Write-Host "Please take a look at new changes. They have been applied to a branch for you to consider"
           Write-Host "auto/merge_remote_changes_for_${{github.run_number}}"
-          
+
       - name: No changes
         if: ${{ steps.latest-deployment.outputs.REMOTE_CHANGES == 'no' }}
         run: echo "preflight_changes=false" >> $GITHUB_ENV
 
   next:
     name: hello
+    needs: preflight
     if: ${{ inputs.skipPreflight == true || github.env.preflight_changes == false }}
     runs-on: ubuntu-latest
     steps:
