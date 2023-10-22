@@ -32,6 +32,24 @@
       "Alias": "hest",
       "PropertyTypes": [
         {
+          "Key": "2ae5f3e6-6f8d-40b3-b5f1-b33f9b1abd4a",
+          "Alias": "date",
+          "DataType": "umb://data-type/5046194e4237453ca54715db3a07c4e1",
+          "Description": null,
+          "Mandatory": false,
+          "MandatoryMessage": null,
+          "Name": "Date",
+          "SortOrder": 1,
+          "Validation": null,
+          "ValidationMessage": null,
+          "VariesByCulture": false,
+          "VariesBySegment": false,
+          "LabelOnTop": false,
+          "MemberCanEdit": false,
+          "ViewOnProfile": false,
+          "IsSensitive": false
+        },
+        {
           "Key": "401a0420-3905-4e5b-ba7e-62105ff6e41f",
           "Alias": "something",
           "DataType": "umb://data-type/c6bac0dd4ab945b18e30e4b619ee5da3",
@@ -55,6 +73,11 @@
   "PropertyTypes": [],
   "Udi": "umb://document-type/de0582fbd90d496fb6d78781d1bd15d7",
   "Dependencies": [
+    {
+      "Udi": "umb://data-type/5046194e4237453ca54715db3a07c4e1",
+      "Ordering": true,
+      "Mode": 0
+    },
     {
       "Udi": "umb://data-type/c6bac0dd4ab945b18e30e4b619ee5da3",
       "Ordering": true,
