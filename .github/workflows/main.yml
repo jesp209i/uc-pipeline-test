@@ -21,6 +21,7 @@ env:
   CLOUD_KEY: ${{ secrets.API_KEY }} # set as secret
   baseUrl : https://api.dev-cloud.umbraco.com
   github_pat_token: ${{ secrets.GITPAT_TOKEN }}
+  preflight_changes: true
 
 jobs:
   preflight:
@@ -71,14 +72,20 @@ jobs:
         run: |
           Write-Host "Please take a look at new changes. They have been applied to a branch for you to consider"
           Write-Host "auto/merge_remote_changes_for_${{github.run_number}}"
+          
+      - name: No changes
+        if: ${{ steps.latest-deployment.outputs.REMOTE_CHANGES == 'no' }}
+        run: echo "preflight_changes=false" >> $GITHUB_ENV
+
   next:
     name: hello
-    if: ${{ inputs.skipPreflight == true }}
+    if: ${{ inputs.skipPreflight == true || github.env.preflight_changes == false }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
-      - run: |
+      - shell: pwsh
+        run: |
           Write-Host "Now Im in the next part."
 
   # publish:
