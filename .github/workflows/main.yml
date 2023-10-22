@@ -8,10 +8,9 @@ on:
      - gitchanges
   workflow_dispatch:
     inputs:
-      ignoreDiff:
-        description: 'Ignore incoming diff'
-        required: true
-        default: false
+      skipPreflight:
+        description: 'Skip Preflight'
+        default: false # if you merged the branch, you can ignore the preflight part of pipeline
         type: boolean
 
 permissions:
@@ -25,6 +24,7 @@ env:
 
 jobs:
   preflight:
+    if: ${{ inputs.skipPreflight == false }}
     name: Check for changes in cloud  
     runs-on: ubuntu-latest
     steps:
@@ -65,6 +65,21 @@ jobs:
           git remote -v
           git push --set-upstream pipeline auto/merge_remote_changes_for_${{github.run_number}}
 
+      - name: Next Steps
+        if: ${{ steps.latest-deployment.outputs.REMOTE_CHANGES == 'yes' }}
+        shell: pwsh
+        run: |
+          Write-Host "Please take a look at new changes. They have been applied to a branch for you to consider"
+          Write-Host "auto/merge_remote_changes_for_${{github.run_number}}"
+  next:
+    name: hello
+    if: ${{ inputs.skipPreflight == true }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - run: |
+          Write-Host "Now Im in the next part."
 
   # publish:
   #   name: Zip and Publish to Cloud
