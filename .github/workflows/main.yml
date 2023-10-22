@@ -1,12 +1,18 @@
 name: pwsh pipeline
 
 on:
-  workflow_dispatch:
   push:
     branches:
      - master
      - powershell
      - gitchanges
+  workflow_dispatch:
+    inputs:
+      ignoreDiff:
+        description: 'Ignore incoming diff'
+        required: true
+        default: false
+        type: boolean
 
 permissions:
   contents: write
