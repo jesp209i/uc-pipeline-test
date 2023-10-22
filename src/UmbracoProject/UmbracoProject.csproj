@@ -14,6 +14,7 @@
     <PackageReference Include="Umbraco.Deploy.Contrib" Version="11.0.1" />
     <PackageReference Include="Umbraco.Deploy.Forms" Version="11.1.0" />
     <PackageReference Include="Umbraco.Forms" Version="11.1.2" />
+    <PackageReference Include="Umbraco.Commerce" Version="10.0.1" />
   </ItemGroup>
 
   <ItemGroup>
