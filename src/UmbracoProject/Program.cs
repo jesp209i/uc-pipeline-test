@@ -1,8 +1,6 @@
 namespace UmbracoProject
 {
-// add comment
-// more comments should yeild changes
-// more more
+
     public class Program
     {
         public static void Main(string[] args)
