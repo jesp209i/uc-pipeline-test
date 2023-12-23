@@ -2,7 +2,9 @@ name: pipeline
 
 on:
   push:
-    branches: [ master, detatched ]
+    branches: 
+      - master
+      - detatched
     
 env:
   PATH_TO_CSPROJ: src/UmbracoProject/UmbracoProject.csproj
