@@ -102,4 +102,5 @@ jobs:
           ${{ env.projectId }} 
           ${{ env.runningDeploymentId }} 
           ${{ env.umbracoCloudApiKey }}
+          1200
           "https://api.dev-cloud.umbraco.com"
