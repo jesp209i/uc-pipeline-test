@@ -12,11 +12,11 @@ jobs:
     uses: ./.github/workflows/cloud-sync.yml
     secrets:
       projectId: ${{ secrets.PROJECT_ID }}
-      umbracoCloudApiKey: ${{ secrets.UMBRACO_CLOUD_API_KEY }}
+      umbracoCloudApiKey: ${{ secrets.API_KEY }}
 
   cloud-deployment:
     needs: cloud-sync
     uses: ./.github/workflows/cloud-deployment.yml
     secrets:
       projectId: ${{ secrets.PROJECT_ID }}
-      umbracoCloudApiKey: ${{ secrets.UMBRACO_CLOUD_API_KEY }}
+      umbracoCloudApiKey: ${{ secrets.API_KEY }}
