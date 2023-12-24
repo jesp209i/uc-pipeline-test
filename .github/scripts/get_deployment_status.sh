@@ -48,6 +48,8 @@ function call_api {
   exit 1
 }
 
+status="Pending" #Status set to get the while-loop running :)
+
 while [[ $status == "Pending" || $status == "InProgress" || $status == "Queued" ]]; do
   call_api
   ((run++))
