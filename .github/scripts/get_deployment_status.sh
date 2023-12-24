@@ -11,7 +11,7 @@ timeoutSeconds="$4"
 # Not required, defaults to https://api.cloud.umbraco.com
 baseUrl="$5" 
 
-if [[ -z "$timeoutSeconds" ]]: then
+if [[ -z "$timeoutSeconds" ]]; then
   timeoutSeconds=1200
 fi
 
