@@ -57,7 +57,7 @@ jobs:
         id: deployment-meta
         shell: bash
         run: >
-          sh ${{GITHUB.WORKSPACE}}/.github/scripts/create_deployment.sh
+          bash ${{GITHUB.WORKSPACE}}/.github/scripts/create_deployment.sh
           ${{ env.projectId }} 
           ${{ env.umbracoCloudApiKey }} 
           "Run number ${{github.run_number}}" 
@@ -68,7 +68,7 @@ jobs:
       - name: Post Zipped Artifact
         shell: bash
         run: >
-          sh ${{GITHUB.WORKSPACE}}/.github/scripts/upload_package.sh 
+          bash ${{GITHUB.WORKSPACE}}/.github/scripts/upload_package.sh 
           ${{ env.projectId }} 
           ${{ steps.deployment-meta.outputs.deploymentId }} 
           ${{ env.umbracoCloudApiKey }} 
@@ -79,7 +79,7 @@ jobs:
       - name: Request Start Deployment
         shell: bash
         run: >
-          sh ${{GITHUB.WORKSPACE}}/.github/scripts/start_deployment.sh 
+          bash ${{GITHUB.WORKSPACE}}/.github/scripts/start_deployment.sh 
           ${{ env.projectId }} 
           ${{ steps.deployment-meta.outputs.deploymentId }} 
           ${{ env.umbracoCloudApiKey }}
@@ -98,7 +98,7 @@ jobs:
         env: 
           runningDeploymentId: ${{ needs.callUmbracoApi.outputs.runningDeploymentId }}
         run: >
-          sh ${{GITHUB.WORKSPACE}}/.github/scripts/get_deployment_status.sh 
+          bash ${{GITHUB.WORKSPACE}}/.github/scripts/get_deployment_status.sh 
           ${{ env.projectId }} 
           ${{ env.runningDeploymentId }} 
           ${{ env.umbracoCloudApiKey }}

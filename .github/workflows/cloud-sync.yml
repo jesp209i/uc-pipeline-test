@@ -24,7 +24,7 @@ jobs:
         id: latest-deployment
         shell: bash
         run: >
-          sh ${{GITHUB.WORKSPACE}}/.github/scripts/get_latest_deployment.sh
+          bash ${{GITHUB.WORKSPACE}}/.github/scripts/get_latest_deployment.sh
           ${{ env.projectId }} 
           ${{ env.umbracoCloudApiKey }} 
           GITHUB
@@ -48,7 +48,7 @@ jobs:
         id: latest-changes
         shell: bash
         run: >
-          sh ${{GITHUB.WORKSPACE}}/.github/scripts/get_changes_by_id.sh 
+          bash ${{GITHUB.WORKSPACE}}/.github/scripts/get_changes_by_id.sh 
           ${{ env.projectId }} 
           ${{ env.umbracoCloudApiKey }} 
           ${{ env.latestDeploymentId }}
