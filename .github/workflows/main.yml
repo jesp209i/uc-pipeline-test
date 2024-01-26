@@ -19,3 +19,4 @@ jobs:
     secrets:
       projectId: ${{ secrets.PROJECT_ID }}
       umbracoCloudApiKey: ${{ secrets.API_KEY }}
+      
