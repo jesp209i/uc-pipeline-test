@@ -7,14 +7,14 @@ on:
      - master
 
 jobs:
-#  cloud-sync:
-#    uses: ./.github/workflows/cloud-sync.yml
-#    secrets:
-#      projectId: ${{ secrets.PROJECT_ID }}
-#      umbracoCloudApiKey: ${{ secrets.API_KEY }}
+  cloud-sync:
+    uses: ./.github/workflows/cloud-sync.yml
+    secrets:
+      projectId: ${{ secrets.PROJECT_ID }}
+      umbracoCloudApiKey: ${{ secrets.API_KEY }}
 
   cloud-deployment:
-#    needs: cloud-sync
+    needs: cloud-sync
     uses: ./.github/workflows/cloud-deployment.yml
     secrets:
       projectId: ${{ secrets.PROJECT_ID }}
