@@ -6,12 +6,6 @@
       "Id": "767e0bed-3b2b-4c38-9d68-0b2cfaed4b6f",
       "Workspaces": [
         {
-          "Id": "edeb3554-e98d-4350-999e-871944c7de1b",
-          "Name": "Staging",
-          "Type": "staging",
-          "Url": "https://stage-jams-cicd-project.euwest01.rainbowsrock.net"
-        },
-        {
           "Id": "f2b57ac4-3ea7-44f3-9e21-346a64894ab0",
           "Name": "Live",
           "Type": "live",
