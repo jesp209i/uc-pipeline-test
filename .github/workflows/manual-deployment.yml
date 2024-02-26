@@ -17,7 +17,7 @@ jobs:
     if: ${{ inputs.perform_sync }}
     secrets:
       projectId: ${{ secrets.PROJECT_ID }}
-      umbracoCloudApiKey: ${{ secrets.UMBRACO_CLOUD_API_KEY }}
+      umbracoCloudApiKey: ${{ secrets.API_KEY }}
 
   # this job is here to prevent deployment to start before the optional cloud-sync job has been done
   conditional-flow:
@@ -36,4 +36,4 @@ jobs:
     if: always()
     secrets:
       projectId: ${{ secrets.PROJECT_ID }}
-      umbracoCloudApiKey: ${{ secrets.UMBRACO_CLOUD_API_KEY }}
+      umbracoCloudApiKey: ${{ secrets.API_KEY }}
