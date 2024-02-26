@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Umbraco.Cloud.Cms.PublicAccess" Version="11.0.0" />
+    <PackageReference Include="Umbraco.Cloud.Cms.PublicAccess" Version="11.0.1" />
     <PackageReference Include="Umbraco.Cloud.Identity.Cms" Version="11.0.57" />
     <PackageReference Include="Umbraco.Cloud.StorageProviders.AzureBlob" Version="11.0.0" />
     <PackageReference Include="Umbraco.Cms" Version="11.3.0" />
@@ -14,7 +14,7 @@
     <PackageReference Include="Umbraco.Deploy.Contrib" Version="11.0.1" />
     <PackageReference Include="Umbraco.Deploy.Forms" Version="11.1.7" />
     <PackageReference Include="Umbraco.Forms" Version="11.1.2" />
-    <PackageReference Include="Umbraco.Commerce" Version="10.0.1" />
+    <PackageReference Include="Umbraco.Commerce" Version="10.0.0" />
   </ItemGroup>
 
   <ItemGroup>
