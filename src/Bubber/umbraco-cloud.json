@@ -12,6 +12,12 @@
           "Url": "https://dev-jams-cicd-project.euwest01.rainbowsrock.net"
         },
         {
+          "Id": "8ea0d537-96b3-4378-a51d-59089b5bd1ee",
+          "Name": "Staging",
+          "Type": "staging",
+          "Url": "https://stage-jams-cicd-project.euwest01.rainbowsrock.net"
+        },
+        {
           "Id": "f2b57ac4-3ea7-44f3-9e21-346a64894ab0",
           "Name": "Live",
           "Type": "live",
