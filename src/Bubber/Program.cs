@@ -16,5 +16,4 @@ namespace UmbracoProject
                     webBuilder.UseStartup<Startup>();
                 });
     }
-    // comment gone
 }
