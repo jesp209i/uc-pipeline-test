@@ -126,7 +126,7 @@ jobs:
         env:
           remoteChanges: ${{ needs.checkForChanges.outputs.remoteChanges }}
           latestDeploymentId: ${{ needs.preflight.outputs.latestDeployemntId }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN}}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN}} # check that permissions are set to create PRs
         if: ${{ success() && env.remoteChanges == 'yes' }}
         run: |
           git config user.name github-actions

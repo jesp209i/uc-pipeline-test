@@ -34,7 +34,7 @@ jobs:
     name: "intermediate info step"
     runs-on: ubuntu-latest
     needs: cloud-sync
-    if: ${{ needs.cloud-sync.outputs.has_changes == true }}
+    if: ${{ needs.cloud-sync.outputs.has_changes == 'true' }}
     steps:
       - shell: bash
         run: >
@@ -45,7 +45,7 @@ jobs:
     name: "Deploy to Cloud"
     uses: ./.github/workflows/cloud-deployment.yml
     needs:  cloud-sync
-    if: ${{ GITHUB.EVENT_NAME == 'push' && needs.cloud-sync.outputs.has_changes == false && success() || ( GITHUB.EVENT_NAME == 'workflow_dispatch' && (inputs.perform_cloud_sync == false || needs.cloud-sync.outputs.has_changes == false )) }}
+    if: ${{ GITHUB.EVENT_NAME == 'push' && needs.cloud-sync.outputs.has_changes == 'false' && success() || ( GITHUB.EVENT_NAME == 'workflow_dispatch' && (inputs.perform_cloud_sync == false || needs.cloud-sync.outputs.has_changes == false )) }}
     with:
       cloudBaseUrl: ${{ vars.CLOUD_BASE_URL }}
     secrets:
