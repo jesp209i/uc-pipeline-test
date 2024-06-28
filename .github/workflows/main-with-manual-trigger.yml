@@ -1,16 +1,17 @@
-name: 🚀 Automatic or 🏎️ Manual Umbraco Cloud Deployment
+name: 🏎️ Manual Umbraco Cloud Deployment
+
+## above name is only used when triggering a manual flow
+## When automatically triggered the commit message is used as name of the run
 
 # Automatically triggered by pushing to main, all job will run 
 # uncomment line 5 to 9
 on:
   push:
-    name: 🚀 Umbraco Cloud Deployment pipeline
     branches:
      - master
 # Allows a manually triggered workflow run 
 # where you can optionally skip the cloud-sync job
   workflow_dispatch:
-    name: 🏎️ Manual Umbraco Cloud Deployment (Hack)
     inputs:
       perform_cloud_sync:
         description: 'Run Cloud-Sync operation First'
