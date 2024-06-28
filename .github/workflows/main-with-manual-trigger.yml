@@ -24,10 +24,12 @@ jobs:
     name: "Synchronize with Cloud"
     uses: ./.github/workflows/cloud-sync.yml
     if: ${{ GITHUB.EVENT_NAME == 'push' || ( GITHUB.EVENT_NAME == 'workflow_dispatch' && inputs.perform_cloud_sync == true) }}
+    with:
+      cloudBaseUrl: ${{ vars.CLOUD_BASE_URL }}
     secrets:
       projectId: ${{ secrets.PROJECT_ID }}
       umbracoCloudApiKey: ${{ secrets.UMBRACO_CLOUD_API_KEY }}
-      cloudBaseUrl: ${{ secrets.CLOUD_BASE_URL }}
+
   hest:
     name: "always fails"
     runs-on: ubuntu-latest
@@ -46,7 +48,8 @@ jobs:
     uses: ./.github/workflows/cloud-deployment.yml
     needs: [hest, cloud-sync]
     if: ${{ success() || ( GITHUB.EVENT_NAME == 'workflow_dispatch' && inputs.perform_cloud_sync == false) }}
+    with:
+      cloudBaseUrl: ${{ vars.CLOUD_BASE_URL }}
     secrets:
       projectId: ${{ secrets.PROJECT_ID }}
       umbracoCloudApiKey: ${{ secrets.UMBRACO_CLOUD_API_KEY }}
-      cloudBaseUrl: ${{ secrets.CLOUD_BASE_URL }}

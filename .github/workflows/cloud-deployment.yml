@@ -2,18 +2,20 @@ name: Deploy To Cloud
 
 on:
   workflow_call:
+    inputs:
+      cloudBaseUrl: 
+        required: true
+        type: string
     secrets:
       projectId: 
         required: true
       umbracoCloudApiKey:
         required: true
-      cloudBaseUrl: 
-        required: true
 
 env:
   projectId: ${{ secrets.projectId }}
   umbracoCloudApiKey: ${{ secrets.umbracoCloudApiKey }}
-  cloudBaseUrl: ${{ secrets.CLOUD_BASE_URL}}
+  cloudBaseUrl: ${{ inputs.cloudBaseUrl}}
 
 jobs:
   prepareDeployment:

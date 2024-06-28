@@ -2,13 +2,16 @@ name: Umbraco Cloud Sync
 
 on:
   workflow_call:
+    inputs:
+      cloudBaseUrl: 
+        required: true
+        type: string
     secrets:
       projectId: 
         required: true
       umbracoCloudApiKey:
         required: true
-      cloudBaseUrl: 
-        required: true
+
     outputs:
       has_changes:
         description: "Changes was downloaded and applied to a branch"
@@ -17,7 +20,7 @@ on:
 env:
   projectId: ${{ secrets.projectId }}
   umbracoCloudApiKey: ${{ secrets.umbracoCloudApiKey }}
-  cloudBaseUrl: ${{ secrets.CLOUD_BASE_URL}} 
+  cloudBaseUrl: ${{ inputs.cloudBaseUrl}} 
 
 jobs:
   preflight:
