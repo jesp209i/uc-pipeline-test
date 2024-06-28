@@ -11,6 +11,7 @@ on:
 env:
   projectId: ${{ secrets.projectId }}
   umbracoCloudApiKey: ${{ secrets.umbracoCloudApiKey }}
+  cloudBaseUrl: ${{ secrets.CLOUD_BASE_URL}} 
 
 jobs:
   preflight:
@@ -28,7 +29,7 @@ jobs:
           ${{ env.projectId }} 
           ${{ env.umbracoCloudApiKey }} 
           GITHUB
-          "https://api.dev-cloud.umbraco.com"
+          ${{ env.cloudBaseUrl}}
     outputs: 
       latestDeployemntId: ${{ steps.latest-deployment.outputs.latestDeploymentId }}
 
@@ -53,7 +54,7 @@ jobs:
           ${{ env.latestDeploymentId }}
           ${{GITHUB.WORKSPACE}}/patch
           GITHUB
-          "https://api.dev-cloud.umbraco.com"
+          ${{ env.cloudBaseUrl}}
 
       - name: See diff content if any
         if: ${{ steps.latest-changes.outputs.remoteChanges == 'yes' }}
