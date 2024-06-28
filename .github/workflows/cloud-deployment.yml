@@ -65,7 +65,7 @@ jobs:
           ${{ env.umbracoCloudApiKey }} 
           "Run number ${{github.run_number}}" 
           GITHUB
-          ${{ env.cloudBaseUrl}}
+          "${{ env.cloudBaseUrl}}"
 
       # Upload your zipped artifact
       - name: Post Zipped Artifact
@@ -76,7 +76,7 @@ jobs:
           ${{ steps.deployment-meta.outputs.deploymentId }} 
           ${{ env.umbracoCloudApiKey }} 
           ${{ GITHUB.WORKSPACE }}/sources.zip
-          ${{ env.cloudBaseUrl}}
+          "${{ env.cloudBaseUrl}}"
 
       # Actually request to start the deployment process in cloud
       - name: Request Start Deployment
@@ -86,7 +86,7 @@ jobs:
           ${{ env.projectId }} 
           ${{ steps.deployment-meta.outputs.deploymentId }} 
           ${{ env.umbracoCloudApiKey }}
-          ${{ env.cloudBaseUrl}}
+          "${{ env.cloudBaseUrl}}"
 
   awaitDeploymentFinished:
     name: Await deployment to finish
@@ -106,4 +106,4 @@ jobs:
           ${{ env.runningDeploymentId }} 
           ${{ env.umbracoCloudApiKey }}
           1200
-          ${{ env.cloudBaseUrl}}
+          "${{ env.cloudBaseUrl}}"

@@ -60,7 +60,7 @@ jobs:
           ${{ env.latestDeploymentId }}
           ${{GITHUB.WORKSPACE}}/patch
           GITHUB
-          ${{ env.cloudBaseUrl}}
+          "${{ env.cloudBaseUrl}}"
 
       - name: See diff content if any
         if: ${{ steps.latest-changes.outputs.remoteChanges == 'yes' }}
