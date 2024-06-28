@@ -37,16 +37,6 @@ jobs:
     needs: preflight
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Fetch Changes From Cloud
-        env:
-          latestDeploymentId: ${{ needs.preflight.outputs.latestDeployemntId }}
-        if: ${{ env.latestDeploymentId != '' }}
-        id: latest-hest
-        shell: bash
-        run: echo $
-
-
       # Download git-patch file based on latest deployment
       # Will write "remoteChanges" to pipeline variables, value can be "yes" or "no"
       # When "remoteChanges" is yes, there will also be downloaded a patch-file to the path you specified in -DownloadFolder parameter
@@ -120,11 +110,14 @@ jobs:
         env:
           remoteChanges: ${{ needs.checkForChanges.outputs.remoteChanges }}
           latestDeploymentId: ${{ needs.preflight.outputs.latestDeployemntId }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN}}
         if: ${{ success() && env.remoteChanges == 'yes' }}
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
+          git checkout -b patch/${{env.latestDeploymentId}}
           git apply ${{GITHUB.WORKSPACE}}/patch/git-patch.diff
           git add *
-          git commit -m "Adding cloud changes since deployment ${{ env.latestDeploymentId }} [skip ci]"
-          git push
+          git commit -m "Adding cloud changes since deployment ${{ env.latestDeploymentId }}"
+          gh pr create -B master -H patch/${{env.latestDeploymentId}} --title 'Cloud changes since deployment ${{ env.latestDeploymentId }}' --body 'Created by GitHub action'
+          

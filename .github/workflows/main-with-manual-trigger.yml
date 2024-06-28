@@ -26,6 +26,12 @@ jobs:
     secrets:
       projectId: ${{ secrets.PROJECT_ID }}
       umbracoCloudApiKey: ${{ secrets.UMBRACO_CLOUD_API_KEY }}
+  hest:
+    name: "always fails"
+    runs-on: ubuntu-latest
+    steps:
+      - shell: bash
+        run: exit 1
 
 # Package and Deploy to Umbraco Cloud
   cloud-deployment:
