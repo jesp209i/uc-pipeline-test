@@ -46,7 +46,7 @@ function get_changes {
     return
   fi
   echo "---Response Start---"
-  echo $Response
+  cat $filePath
   echo "---Response End---"
   echo "Unexpected response - see above"
   exit 1
