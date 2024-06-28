@@ -100,6 +100,17 @@ jobs:
         with:
           name: git-patch
           path: ${{GITHUB.WORKSPACE}}/patch
+
+      - name: Test Cloud Patch before apply
+        env:
+          remoteChanges: ${{ needs.checkForChanges.outputs.remoteChanges }}
+        if: ${{ env.remoteChanges == 'yes' }}          
+        shell: pwsh
+        run: >
+          ${{GITHUB.WORKSPACE}}/.github/powershell/Test-Changes.ps1 
+          -SourceBranchName ${{ GITHUB.REF }} 
+          -PatchFilePath ${{GITHUB.WORKSPACE}}/patch/git-patch.diff
+          -PipelineVendor GITHUB
       
       # Using plain git to try an push changes back to local repo
       # Depending on your setup you may need to change settings and permissions to better fit your needs
@@ -109,7 +120,7 @@ jobs:
         env:
           remoteChanges: ${{ needs.checkForChanges.outputs.remoteChanges }}
           latestDeploymentId: ${{ needs.preflight.outputs.latestDeployemntId }}
-        if: ${{ env.remoteChanges == 'yes' }}
+        if: ${{ success() && env.remoteChanges == 'yes' }}
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
