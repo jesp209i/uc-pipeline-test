@@ -35,7 +35,8 @@ jobs:
     if: ${{ !( GITHUB.EVENT_NAME == 'workflow_dispatch' && inputs.perform_cloud_sync == false) }}
     steps:
       - shell: bash
-        run: echo "value of has_changes: ${{ needs.cloud-sync.outputs.has_changes}}"
+        run: >
+          echo value of has_changes: ${{ needs.cloud-sync.outputs.has_changes}}
       - shell: bash
         run: exit 1
 
