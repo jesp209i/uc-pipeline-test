@@ -36,7 +36,7 @@ function call_api {
   
   if [[ 10#$responseCode -eq 200 ]]; then
     status=$(echo $content | jq -Rnr '[inputs] | join("\\n") | fromjson | .deploymentState' )
-    echo $(echo $content | jq -Rnr '[inputs] | join("\\n") | fromjson | .updateMessage' )
+    echo -e $(echo $content | jq -Rnr '[inputs] | join("\\n") | fromjson | .updateMessage' )
     return
   fi
 
