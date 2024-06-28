@@ -29,6 +29,7 @@ jobs:
   hest:
     name: "always fails"
     runs-on: ubuntu-latest
+    if: ${{ !( GITHUB.EVENT_NAME == 'workflow_dispatch' && inputs.perform_cloud_sync == false) }}
     steps:
       - shell: bash
         run: exit 1
