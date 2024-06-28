@@ -135,6 +135,7 @@ jobs:
           git apply ${{GITHUB.WORKSPACE}}/patch/git-patch.diff
           git add -A
           git commit -m "Adding cloud changes since deployment ${{ env.latestDeploymentId }}"
+          git push -u origin patch/${{env.latestDeploymentId}}
           gh pr create -B master -H patch/${{env.latestDeploymentId}} --title 'Cloud changes since deployment ${{ env.latestDeploymentId }}' --body 'Created by GitHub action'
           echo "changes_applied=true" >> $GITHUB_OUTPUT
           
