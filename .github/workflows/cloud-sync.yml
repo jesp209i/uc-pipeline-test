@@ -9,6 +9,10 @@ on:
         required: true
       cloudBaseUrl: 
         required: true
+    outputs:
+      has_changes:
+        description: "Changes was downloaded and applied to a branch"
+        value: ${{ jobs.applyRemoteChanges.outputs.changes_applied }}
   
 env:
   projectId: ${{ secrets.projectId }}
@@ -77,6 +81,9 @@ jobs:
     name: Apply remote changes
     needs: [preflight, checkForChanges]
     runs-on: ubuntu-latest
+    outputs:
+      changes_applied: ${{ steps.applying-git-patch.outputs.changes_applied }}
+
     steps:
       - uses: actions/checkout@v4
         env:
@@ -110,6 +117,7 @@ jobs:
       # This targets the same branch as the pipeline was triggered on.
       # Stopping a new pipeline run by using the "[skip ci]" as part of commit message 
       - name: Applying git patch to branch
+        id: applying-git-patch
         env:
           remoteChanges: ${{ needs.checkForChanges.outputs.remoteChanges }}
           latestDeploymentId: ${{ needs.preflight.outputs.latestDeployemntId }}
@@ -123,4 +131,5 @@ jobs:
           git add *
           git commit -m "Adding cloud changes since deployment ${{ env.latestDeploymentId }}"
           gh pr create -B master -H patch/${{env.latestDeploymentId}} --title 'Cloud changes since deployment ${{ env.latestDeploymentId }}' --body 'Created by GitHub action'
+          echo "changes_applied=true" >> $GITHUB_OUTPUT
           
