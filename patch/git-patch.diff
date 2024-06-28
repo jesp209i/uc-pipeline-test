@@ -1,0 +1,13 @@
+diff --git a/.zipignore b/.zipignore
+index 3bcc7fd..cefd16f 100644
+--- a/.zipignore
++++ b/.zipignore
+@@ -20,4 +20,5 @@ node_modules/*
+ **/node_modules*
+ 
+ ## ignore this file
+-.zipignore
+\ No newline at end of file
++.zipignore
++## a change
+\ No newline at end of file
