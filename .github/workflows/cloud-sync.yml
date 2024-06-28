@@ -47,6 +47,8 @@ jobs:
     needs: preflight
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+      
       # Download git-patch file based on latest deployment
       # Will write "remoteChanges" to pipeline variables, value can be "yes" or "no"
       # When "remoteChanges" is yes, there will also be downloaded a patch-file to the path you specified in -DownloadFolder parameter
