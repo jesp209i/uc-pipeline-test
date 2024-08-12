@@ -50,7 +50,7 @@ namespace UmbracoProject
 
             app.UseHttpsRedirection();
 
-            app.UseUmbraco()
+            app.UseUmbracoNot()
                 .WithMiddleware(u =>
                 {
                     u.UseBackOffice();
