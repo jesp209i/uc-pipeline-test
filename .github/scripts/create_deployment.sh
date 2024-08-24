@@ -24,7 +24,8 @@ function call_api {
   response=$(curl -s -w "%{http_code}" -X POST $url \
     -H "Umbraco-Cloud-Api-Key: $apiKey" \
     -H "Content-Type: application/json" \
-    -d "{\"commitMessage\":\"$commitMessage\"}")
+    #-d "{\"commitMessage\":\"$commitMessage\"}")
+    -d "{\"commitMessage\":\"$commitMessage\",\"skipRestoreAndBuild\":true}")
   responseCode=${response: -3}  
   content=${response%???}
 
