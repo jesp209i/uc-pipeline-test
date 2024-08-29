@@ -6,12 +6,6 @@
       "Id": "767e0bed-3b2b-4c38-9d68-0b2cfaed4b6f",
       "Workspaces": [
         {
-          "Id": "4f97859d-5c0d-4933-87de-1d5594b9c4d0",
-          "Name": "Development",
-          "Type": "development",
-          "Url": "https://dev-jams-cicd-project.euwest01.rainbowsrock.net"
-        },
-        {
           "Id": "f2b57ac4-3ea7-44f3-9e21-346a64894ab0",
           "Name": "Live",
           "Type": "live",
