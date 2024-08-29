@@ -23,7 +23,7 @@ jobs:
   #  needs: cloud-sync
     uses: ./.github/workflows/cloud-deployment.yml
     with:
-      newSha: hest--{{ needs.cloud-sync.outputs.newSha }}
+    #  newSha: hest--{{ needs.cloud-sync.outputs.newSha }}
       cloudBaseUrl: ${{ vars.CLOUD_BASE_URL }}
     secrets:
       PROJECT_ID: ${{ secrets.PROJECT_ID }}
