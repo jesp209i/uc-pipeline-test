@@ -6,9 +6,9 @@ name: 🏎️ Manual Umbraco Cloud Deployment
 # Automatically triggered by pushing to main, all job will run 
 # uncomment line 5 to 9
 on:
-  push:
-    branches:
-     - master
+#  push:
+#    branches:
+#     - master
 # Allows a manually triggered workflow run 
 # where you can optionally skip the cloud-sync job
   workflow_dispatch:
@@ -22,7 +22,7 @@ jobs:
 # Try to sync the local repository to get up to speed with any changes in Cloud project
   cloud-sync:
     name: "Synchronize with Cloud"
-    uses: ./.github/workflows/cloud-sync.yml
+    uses: ./.github/workflows/cloud-sync-man.yml
     if: ${{ GITHUB.EVENT_NAME == 'push' || ( GITHUB.EVENT_NAME == 'workflow_dispatch' && inputs.perform_cloud_sync == true) }}
     with:
       cloudBaseUrl: ${{ vars.CLOUD_BASE_URL }}
@@ -43,7 +43,7 @@ jobs:
 # Package and Deploy to Umbraco Cloud
   cloud-deployment:
     name: "Deploy to Cloud"
-    uses: ./.github/workflows/cloud-deployment.yml
+    uses: ./.github/workflows/cloud-deployment-man.yml
     needs:  cloud-sync
     if: ${{ GITHUB.EVENT_NAME == 'push' && needs.cloud-sync.outputs.has_changes == 'false' && success() || ( GITHUB.EVENT_NAME == 'workflow_dispatch' && (inputs.perform_cloud_sync == false || needs.cloud-sync.outputs.has_changes == false )) }}
     with:
