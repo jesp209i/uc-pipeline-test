@@ -6,21 +6,19 @@ on:
       cloudBaseUrl: 
         required: true
         type: string
+    outputs:
+      newSha:
+        description: 'The new SHA hash if there was a patch'
+        value: ${{ jobs.applyRemoteChanges.outputs.newSha }}
     secrets:
-      projectId: 
+      projectId:
         required: true
       umbracoCloudApiKey:
         required: true
 
-    outputs:
-      has_changes:
-        description: "Changes was downloaded and applied to a branch"
-        value: ${{ jobs.applyRemoteChanges.outputs.changes_applied }}
-  
 env:
   projectId: ${{ secrets.projectId }}
   umbracoCloudApiKey: ${{ secrets.umbracoCloudApiKey }}
-  cloudBaseUrl: ${{ inputs.cloudBaseUrl}} 
 
 jobs:
   preflight:
@@ -28,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Gets the latest CICD Flow deployment if there is any
-      # Will write "latestDeploymentId" to pipeline variables, value can be an uuid or empty string 
+      # Will write "latestDeploymentId" to pipeline variables, value can be an uuid or empty string
       - uses: actions/checkout@v4
       - name: Get Latest Deployment
         id: latest-deployment
@@ -38,9 +36,9 @@ jobs:
           ${{ env.projectId }} 
           ${{ env.umbracoCloudApiKey }} 
           GITHUB
-          ${{ env.cloudBaseUrl}}
-    outputs: 
-      latestDeployemntId: ${{ steps.latest-deployment.outputs.latestDeploymentId }}
+
+    outputs:
+      latestDeploymentId: ${{ steps.latest-deployment.outputs.latestDeploymentId }}
 
   checkForChanges:
     name: Check if there are changes since latest deployment
@@ -48,13 +46,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       # Download git-patch file based on latest deployment
       # Will write "remoteChanges" to pipeline variables, value can be "yes" or "no"
       # When "remoteChanges" is yes, there will also be downloaded a patch-file to the path you specified in -DownloadFolder parameter
       - name: Fetch Changes From Cloud
         env:
-          latestDeploymentId: ${{ needs.preflight.outputs.latestDeployemntId }}
+          latestDeploymentId: ${{ needs.preflight.outputs.latestDeploymentId }}
         if: ${{ env.latestDeploymentId != '' }}
         id: latest-changes
         shell: bash
@@ -65,7 +62,6 @@ jobs:
           ${{ env.latestDeploymentId }}
           ${{GITHUB.WORKSPACE}}/patch
           GITHUB
-          "${{ env.cloudBaseUrl}}"
 
       - name: See diff content if any
         if: ${{ steps.latest-changes.outputs.remoteChanges == 'yes' }}
@@ -80,15 +76,12 @@ jobs:
           path: ${{GITHUB.WORKSPACE}}/patch/git-patch.diff
           retention-days: 1
     outputs:
-      remoteChanges: ${{ steps.latest-changes.outputs.remoteChanges }}  
+      remoteChanges: ${{ steps.latest-changes.outputs.remoteChanges }}
 
   applyRemoteChanges:
     name: Apply remote changes
     needs: [preflight, checkForChanges]
     runs-on: ubuntu-latest
-    outputs:
-      changes_applied: ${{ steps.applying-git-patch.outputs.changes_applied }}
-
     steps:
       - uses: actions/checkout@v4
         env:
@@ -106,36 +99,28 @@ jobs:
           name: git-patch
           path: ${{GITHUB.WORKSPACE}}/patch
 
-      - name: Test Cloud Patch before apply
-        env:
-          remoteChanges: ${{ needs.checkForChanges.outputs.remoteChanges }}
-        if: ${{ env.remoteChanges == 'yes' }}          
-        shell: pwsh
-        run: >
-          ${{GITHUB.WORKSPACE}}/.github/powershell/Test-Changes.ps1 
-          -SourceBranchName ${{ GITHUB.REF }} 
-          -PatchFilePath ${{GITHUB.WORKSPACE}}/patch/git-patch.diff
-          -PipelineVendor GITHUB
-      
       # Using plain git to try an push changes back to local repo
       # Depending on your setup you may need to change settings and permissions to better fit your needs
       # This targets the same branch as the pipeline was triggered on.
-      # Stopping a new pipeline run by using the "[skip ci]" as part of commit message 
+
+      ## You can change the gitName and gitEmail to whatever you want, this will show up in you git history on
+      ## changes coming from Umbraco Cloud
+
       - name: Applying git patch to branch
-        id: applying-git-patch
+        id: update-bundle
         env:
           remoteChanges: ${{ needs.checkForChanges.outputs.remoteChanges }}
-          latestDeploymentId: ${{ needs.preflight.outputs.latestDeployemntId }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN}} # check that permissions are set to create PRs
-        if: ${{ success() && env.remoteChanges == 'yes' }}
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git checkout -b patch/${{env.latestDeploymentId}}
-          git apply ${{GITHUB.WORKSPACE}}/patch/git-patch.diff
-          git add -A
-          git commit -m "Adding cloud changes since deployment ${{ env.latestDeploymentId }}"
-          git push -u origin patch/${{env.latestDeploymentId}}
-          gh pr create -B master -H patch/${{env.latestDeploymentId}} --title 'Cloud changes since deployment ${{ env.latestDeploymentId }}' --body 'Created by GitHub action'
-          echo "changes_applied=true" >> $GITHUB_OUTPUT
-          
+          latestDeploymentId: ${{ needs.preflight.outputs.latestDeploymentId }}
+          gitName: github-actions
+          gitEmail: github-actions@github.com
+        if: ${{ env.remoteChanges == 'yes' }}
+        shell: bash
+        run: >
+          bash ${{GITHUB.WORKSPACE}}/.github/scripts/apply_patch.sh 
+          ${{ GITHUB.WORKSPACE }}/patch/git-patch.diff 
+          ${{ env.latestDeploymentId }} 
+          GITHUB
+          ${{ env.gitName }}
+          ${{ env.gitEmail }}
+    outputs:
+      newSha: ${{ steps.update-bundle.outputs.updatedSha }}
