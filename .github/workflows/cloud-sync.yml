@@ -11,14 +11,11 @@ on:
         description: 'The new SHA hash if there was a patch'
         value: ${{ jobs.applyRemoteChanges.outputs.newSha }}
     secrets:
-      projectId:
+      PROJECT_ID:
         required: true
-      umbracoCloudApiKey:
+      UMBRACO_CLOUD_API_KEY:
         required: true
 
-env:
-  projectId: ${{ secrets.projectId }}
-  umbracoCloudApiKey: ${{ secrets.umbracoCloudApiKey }}
 
 jobs:
   preflight:
@@ -26,17 +23,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Gets the latest CICD Flow deployment if there is any
-      # Will write "latestDeploymentId" to pipeline variables, value can be an uuid or empty string
+      # Will write "latestDeploymentId" to pipeline variables, value can be an uuid or empty string 
       - uses: actions/checkout@v4
       - name: Get Latest Deployment
         id: latest-deployment
         shell: bash
         run: >
           bash ${{GITHUB.WORKSPACE}}/.github/scripts/get_latest_deployment.sh
-          ${{ env.projectId }} 
-          ${{ env.umbracoCloudApiKey }} 
+          ${{ secrets.PROJECT_ID }} 
+          ${{ secrets.UMBRACO_CLOUD_API_KEY }} 
           GITHUB
-
+          "${{ inputs.cloudBaseUrl}}"
     outputs:
       latestDeploymentId: ${{ steps.latest-deployment.outputs.latestDeploymentId }}
 
@@ -57,11 +54,12 @@ jobs:
         shell: bash
         run: >
           bash ${{GITHUB.WORKSPACE}}/.github/scripts/get_changes_by_id.sh 
-          ${{ env.projectId }} 
-          ${{ env.umbracoCloudApiKey }} 
+          ${{ secrets.PROJECT_ID }} 
+          ${{ secrets.UMBRACO_CLOUD_API_KEY }} 
           ${{ env.latestDeploymentId }}
           ${{GITHUB.WORKSPACE}}/patch
           GITHUB
+          "${{ inputs.cloudBaseUrl}}"
 
       - name: See diff content if any
         if: ${{ steps.latest-changes.outputs.remoteChanges == 'yes' }}
