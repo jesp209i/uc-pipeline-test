@@ -1,0 +1,16 @@
+{
+  "Name": "Hest",
+  "Alias": "Hest",
+  "File": "umb://template-file/Hest.cshtml",
+  "Master": null,
+  "Udi": "umb://template/bd6d0495797743e29a9a70ce163921c8",
+  "Dependencies": [
+    {
+      "Udi": "umb://template-file/Hest.cshtml",
+      "Ordering": true,
+      "Mode": 0
+    }
+  ],
+  "__type": "Umbraco.Deploy.Infrastructure,Umbraco.Deploy.Infrastructure.Artifacts.TemplateArtifact",
+  "__version": "11.1.7"
+}
