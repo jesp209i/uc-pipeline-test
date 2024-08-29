@@ -33,8 +33,6 @@ function call_api {
     responseCode=${response: -3}  
     content=${response%???}
 
-    echo "$content"
-
   if [[ 10#$responseCode -eq 200 ]]; then
     latestDeploymentId=$(echo $content | jq -Rnr '[inputs] | join("\\n") | fromjson | .deployments[0].deploymentId')
 
@@ -69,7 +67,6 @@ elif [[ "$pipelineVendor" == "AZUREDEVOPS" ]]; then
   echo "##vso[task.setvariable variable=latestDeploymentId;isOutput=true]$latestDeploymentId"
   exit 0
 elif [[ "$pipelineVendor" == "TESTRUN" ]]; then
-  echo $latestDeploymentId
   echo $pipelineVendor
   exit 0
 fi
