@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="Microsoft.ICU.ICU4C.Runtime" Version="68.2.0.9" />
+    <PackageVersion Include="Umbraco.Cloud.Cms.PublicAccess" Version="11.0.1" />
+    <PackageVersion Include="Umbraco.Cloud.Identity.Cms" Version="11.0.57" />
+    <PackageVersion Include="Umbraco.Cloud.StorageProviders.AzureBlob" Version="11.0.0" />
+    <PackageVersion Include="Umbraco.Cms" Version="11.5.0" />
+    <PackageVersion Include="Umbraco.Deploy.Cloud" Version="11.1.7" />
+    <PackageVersion Include="Umbraco.Deploy.Contrib" Version="11.0.1" />
+    <PackageVersion Include="Umbraco.Deploy.Forms" Version="11.1.7" />
+    <PackageVersion Include="Umbraco.Forms" Version="11.2.1" /> 
+
+  </ItemGroup>
+</Project>
+
+<!-- 
+
+-->
