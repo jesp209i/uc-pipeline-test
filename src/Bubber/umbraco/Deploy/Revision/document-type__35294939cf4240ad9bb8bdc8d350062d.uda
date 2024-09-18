@@ -1,0 +1,71 @@
+{
+  "Name": "jkljkkljl",
+  "Alias": "jkljkkljl",
+  "DefaultTemplate": "umb://template/6e011961502245918b4888ca4afc102c",
+  "AllowedTemplates": [
+    "umb://template/6e011961502245918b4888ca4afc102c"
+  ],
+  "HistoryCleanup": {
+    "preventCleanup": false,
+    "keepAllVersionsNewerThanDays": null,
+    "keepLatestVersionPerDayForDays": null
+  },
+  "Icon": "icon-document",
+  "Thumbnail": "folder.png",
+  "Description": null,
+  "IsContainer": false,
+  "Permissions": {
+    "AllowVaryingByCulture": false,
+    "AllowVaryingBySegment": false,
+    "AllowedAtRoot": false,
+    "IsElementType": false,
+    "AllowedChildContentTypes": []
+  },
+  "Parent": null,
+  "CompositionContentTypes": [],
+  "PropertyGroups": [
+    {
+      "Key": "53d2d1a2-b160-48d1-a8a9-9c630ac40538",
+      "Name": "jljljklkj",
+      "SortOrder": 0,
+      "Type": 0,
+      "Alias": "jljljklkj",
+      "PropertyTypes": [
+        {
+          "Key": "ff36de36-2021-4c04-a646-d005e7e1b1d8",
+          "Alias": "jkljklkjl",
+          "DataType": "umb://data-type/dfabba1abe8a4ee285bb132f4f383ae6",
+          "Description": null,
+          "Mandatory": false,
+          "MandatoryMessage": null,
+          "Name": "jkljklkjl",
+          "SortOrder": 0,
+          "Validation": null,
+          "ValidationMessage": null,
+          "VariesByCulture": false,
+          "VariesBySegment": false,
+          "LabelOnTop": false,
+          "MemberCanEdit": false,
+          "ViewOnProfile": false,
+          "IsSensitive": false
+        }
+      ]
+    }
+  ],
+  "PropertyTypes": [],
+  "Udi": "umb://document-type/35294939cf4240ad9bb8bdc8d350062d",
+  "Dependencies": [
+    {
+      "Udi": "umb://data-type/dfabba1abe8a4ee285bb132f4f383ae6",
+      "Ordering": true,
+      "Mode": 0
+    },
+    {
+      "Udi": "umb://template/6e011961502245918b4888ca4afc102c",
+      "Ordering": true,
+      "Mode": 0
+    }
+  ],
+  "__type": "Umbraco.Deploy.Infrastructure,Umbraco.Deploy.Infrastructure.Artifacts.ContentType.DocumentTypeArtifact",
+  "__version": "12.0.0"
+}
