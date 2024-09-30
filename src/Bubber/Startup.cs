@@ -62,9 +62,7 @@ namespace UmbracoProject
                     u.UseBackOfficeEndpoints();
                     u.UseWebsiteEndpoints();
                 });
-                var hest = "bubber";
+                var hest = "buuberrrr";
         }
     }
-    // change
-    //on emore 
 }
