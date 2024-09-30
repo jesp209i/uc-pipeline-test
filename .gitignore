@@ -417,7 +417,6 @@ healthchecksdb
 **/Views/Partials/Forms/Themes/bootstrap3-horizontal/
 **/Views/Partials/Forms/Themes/default/
 
-
 # Ignore js build assets
 **/wwwroot/app/
 patch/git-patch.diff
