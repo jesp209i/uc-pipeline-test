@@ -52,7 +52,7 @@ function get_changes {
   echo "$errorResponse" | jq . > /dev/null 2>&1
   if [ $? -ne 0 ]; then
       echo "--- Response RAW ---\n"
-      echo $errorResponse
+      echo "$(<$errorResponse)"
   else 
       echo "--- Response JSON formatted ---\n"
       echo $errorResponse | jq .
