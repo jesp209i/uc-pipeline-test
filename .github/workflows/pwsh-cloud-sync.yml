@@ -30,8 +30,8 @@ jobs:
         shell: pwsh
         run: >
           ${{GITHUB.WORKSPACE}}/.github/powershell/Get-LatestDeployment.ps1 
-          -ProjectId ${{ env.projectId }} 
-          -ApiKey ${{ env.umbracoCloudApiKey }} 
+          -ProjectId ${{ secrets.PROJECT_ID }} 
+          -ApiKey ${{ secrets.UMBRACO_CLOUD_API_KEY }} 
           -PipelineVendor GITHUB
           -BaseUrl ${{ inputs.cloudBaseUrl }}
     outputs:
@@ -54,8 +54,8 @@ jobs:
         shell: pwsh
         run: >
           ${{GITHUB.WORKSPACE}}/.github/powershell/Get-ChangesById.ps1 
-          -ProjectId ${{ env.projectId }} 
-          -ApiKey ${{ env.umbracoCloudApiKey }} 
+          -ProjectId ${{ secrets.PROJECT_ID }} 
+          -ApiKey ${{ secrets.UMBRACO_CLOUD_API_KEY }} 
           -DeploymentId ${{ env.latestDeploymentId }}
           -DownloadFolder ${{GITHUB.WORKSPACE}}/patch
           -PipelineVendor GITHUB
