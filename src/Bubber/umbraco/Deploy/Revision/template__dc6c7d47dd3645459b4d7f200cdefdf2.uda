@@ -7,15 +7,13 @@
   "Dependencies": [
     {
       "Udi": "umb://template-file/Yolo.cshtml",
-      "Ordering": true,
-      "Mode": 0
+      "Ordering": true
     },
     {
       "Udi": "umb://template/e2792528216d43d8a043fd9cca1f4c42",
-      "Ordering": true,
-      "Mode": 0
+      "Ordering": true
     }
   ],
   "__type": "Umbraco.Deploy.Infrastructure,Umbraco.Deploy.Infrastructure.Artifacts.TemplateArtifact",
-  "__version": "12.0.0"
+  "__version": "12.2.0"
 }

@@ -2,15 +2,13 @@
   "Name": "jkljkkljl",
   "Alias": "jkljkkljl",
   "File": "umb://template-file/jkljkkljl.cshtml",
-  "Master": null,
   "Udi": "umb://template/6e011961502245918b4888ca4afc102c",
   "Dependencies": [
     {
       "Udi": "umb://template-file/jkljkkljl.cshtml",
-      "Ordering": true,
-      "Mode": 0
+      "Ordering": true
     }
   ],
   "__type": "Umbraco.Deploy.Infrastructure,Umbraco.Deploy.Infrastructure.Artifacts.TemplateArtifact",
-  "__version": "12.0.0"
+  "__version": "12.2.0"
 }

@@ -2,7 +2,6 @@
   "Name": "jkljkkljl - jkljklkjl - Multinode Treepicker",
   "Alias": "",
   "EditorAlias": "Umbraco.MultiNodeTreePicker",
-  "DatabaseType": 0,
   "Configuration": {
     "startNode": {
       "type": "content"
@@ -12,9 +11,8 @@
     "showOpenButton": false,
     "ignoreUserStartNodes": false
   },
-  "Parent": null,
   "Udi": "umb://data-type/dfabba1abe8a4ee285bb132f4f383ae6",
   "Dependencies": [],
   "__type": "Umbraco.Deploy.Infrastructure,Umbraco.Deploy.Infrastructure.Artifacts.DataTypeArtifact",
-  "__version": "12.0.0"
+  "__version": "12.2.0"
 }
