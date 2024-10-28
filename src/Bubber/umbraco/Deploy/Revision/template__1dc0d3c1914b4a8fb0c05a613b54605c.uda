@@ -1,0 +1,14 @@
+{
+  "Name": "Change to me",
+  "Alias": "ChangeToMe",
+  "File": "umb://template-file/ChangeToMe.cshtml",
+  "Udi": "umb://template/1dc0d3c1914b4a8fb0c05a613b54605c",
+  "Dependencies": [
+    {
+      "Udi": "umb://template-file/ChangeToMe.cshtml",
+      "Ordering": true
+    }
+  ],
+  "__type": "Umbraco.Deploy.Infrastructure,Umbraco.Deploy.Infrastructure.Artifacts.TemplateArtifact",
+  "__version": "12.2.0"
+}
