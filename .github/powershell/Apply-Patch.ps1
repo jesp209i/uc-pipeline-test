@@ -31,7 +31,7 @@ If ($PipelineVendor -eq "AZUREDEVOPS"){
 Write-Host "Testing the patch - errors might show up, and that is okay"
 Write-Host "=========================================================="
 # Check if the patch has been applied already, skip if it has
-git apply $PatchFile --reverse --ignore-space-change --ignore-whitespace --check
+git apply $PatchFile --reverse --ignore-space-change --ignore-whitespace --check --verbose
 If ($LASTEXITCODE -eq 0) {
     Write-Host "Patch already applied === concluding the apply patch part"
     Exit 0
@@ -41,11 +41,11 @@ If ($LASTEXITCODE -eq 0) {
 
 Write-Host "Checking if patch can be applied..."
 # Check if the patch can be applied
-git apply $PatchFile --ignore-space-change --ignore-whitespace --check
+git apply $PatchFile --ignore-space-change --ignore-whitespace --check --verbose
 If ($LASTEXITCODE -eq 0) {
     Write-Host "Patch needed, trying to apply now"
     Write-Host "================================="
-    git apply $PatchFile --ignore-space-change --ignore-whitespace
+    git apply $PatchFile --ignore-space-change --ignore-whitespace --verbose
 
     switch ($PipelineVendor) {
         "GITHUB" {
