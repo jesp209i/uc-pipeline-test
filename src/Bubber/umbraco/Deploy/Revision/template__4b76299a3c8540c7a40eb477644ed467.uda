@@ -1,0 +1,14 @@
+{
+  "Name": "Change to meme",
+  "Alias": "ChangeToMeme",
+  "File": "umb://template-file/ChangeToMeme.cshtml",
+  "Udi": "umb://template/4b76299a3c8540c7a40eb477644ed467",
+  "Dependencies": [
+    {
+      "Udi": "umb://template-file/ChangeToMeme.cshtml",
+      "Ordering": true
+    }
+  ],
+  "__type": "Umbraco.Deploy.Infrastructure,Umbraco.Deploy.Infrastructure.Artifacts.TemplateArtifact",
+  "__version": "12.2.0"
+}
