@@ -18,9 +18,6 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <div class="card">
       <uui-button look="primary" id="counter" type="button"></uui-button>
     </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
   </uui-box>
 `
 
