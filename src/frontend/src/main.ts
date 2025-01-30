@@ -18,6 +18,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <div class="card">
       <uui-button look="primary" id="counter" type="button"></uui-button>
     </div>
+    change
   </uui-box>
 `
 
