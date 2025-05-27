@@ -4,7 +4,6 @@ namespace UmbracoProject
     {
         private readonly IWebHostEnvironment _env;
         private readonly IConfiguration _config;
-        /// Comment in code
         /// <summary>
         /// Initializes a new instance of the <see cref="Startup" /> class.
         /// </summary>
